@@ -47,7 +47,7 @@ cp target/release/souffle-lint /usr/bin
 
 ## Usage
 
-Just pass a list of Soufflé Datalog files to `souffle-lint lint`, or pass one on
+Pass a list of Soufflé Datalog files to `souffle-lint lint`, or pass one on
 stdin:
 
 ```bash
@@ -61,9 +61,9 @@ souffle-lint lint file.dl path/to/file2.dl
 souffle-lint lint ./**/*.dl
 ```
 
-The exit code will be `0` if `souffle-lint lint` succeeded with no warnings, `1`
-if there were any warnings, or `2` if there was a problem (e.g., a parse error
-or bad configuration).
+The exit code will be `0` if `souffle-lint` succeeded with no warnings, `1` if
+there were any warnings, or `2` if there was a problem (e.g., a parse error or
+bad configuration).
 
 See `--help` for more options.
 
@@ -95,10 +95,10 @@ warn[error-dup-type-decl] Duplicated type declaration
 You can disable a rule entirely by passing `--ignore=<rule-name>` on the command
 line. In fact, you can pass a *prefix* to `--ignore`; any rules that start with
 that prefix will be ignored. For example, `--ignore=simpl` will disable any
-rules with names starting with `simpl`. See [Rule Categories][#rule-categories]
+rules with names starting with `simpl`. See [Rule Categories](#rule-categories)
 for information about common prefixes.
 
-Ignoring a specific warning on a specific line is not yet implemented.
+Ignoring a specific warning on a specific line is [not yet implemented][#5].
 
 <!-- TODO(#5): Implement me! 
 
@@ -180,7 +180,7 @@ By convention, rules have names starting with common prefixes:
 
 ### Tests
 
-Tested with [lit][lit] and [FileCheck][filecheck]
+Tested with [lit][lit] and [FileCheck][filecheck].
 ```bash
 cargo build
 lit --path=$PWD/target/debug test/
@@ -199,6 +199,7 @@ Large Soufflé files are available in `bench/`. Try passing `--trace` to
 4. `cargo publish`
 5. Release the pre-release created by CI
 
+[#5]: https://github.com/langston-barrett/souffle-lint/issues/5
 [filecheck]: https://www.llvm.org/docs/CommandGuide/FileCheck.html
 [lit]: https://llvm.org/docs/CommandGuide/lit.html
 [releases]: https://github.com/langston-barrett/souffle-lint/releases
