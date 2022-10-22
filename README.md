@@ -37,6 +37,7 @@ Statically-linked binaries are available on the [releases page][releases].
 
 ```bash
 git clone https://github.com/langston-barrett/souffle-lint
+cd souffle-lint
 cargo build --release
 ```
 To install, just copy the binary somewhere:
