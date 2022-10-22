@@ -43,7 +43,7 @@ cp target/release/souffle-lint /usr/bin
 
 ### Install from a Release
 
-TBD. <!-- TODO(#1)  -->
+Statically-linked binaries are available on the [releases page][releases].
 
 ## Usage
 
@@ -201,6 +201,7 @@ Large Soufflé files are available in `bench/`. Try passing `--trace` to
 
 [filecheck]: https://www.llvm.org/docs/CommandGuide/FileCheck.html
 [lit]: https://llvm.org/docs/CommandGuide/lit.html
+[releases]: https://github.com/langston-barrett/souffle-lint/releases
 [souffle]: https://souffle-lang.github.io/index.html
 [tree-sitter-query]: https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax
 [tree-sitter-souffle]: https://github.com/langston-barrett/tree-sitter-souffle/
