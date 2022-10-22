@@ -4,21 +4,6 @@ A linter for [Soufflé Datalog][souffle], based on
 [tree-sitter-souffle][tree-sitter-souffle], configured with
 [tree-sitter queries][tree-sitter-query].
 
-<!--
-
-TODO(lb):
-
-- Warn on parse errors
-- More context for each `?`
-- More configuration validation
-- CI
-  - Build
-  - Lint
-  - Release
-  - Test
-
--->
-
 ## Contents
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
