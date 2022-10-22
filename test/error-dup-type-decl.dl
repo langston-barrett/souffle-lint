@@ -1,0 +1,25 @@
+// RUN: souffle-lint lint --no-fail --only=error-dup-type-decl --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[error-dup-type-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+.type T <: number
+.type T <: Q
+
+// CHECK: warn[error-dup-type-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 2]]:{{[0-9]+}}-[[# @LINE + 2]]:{{[0-9]+}}
+.type Z <: Y
+
+.type Z <: X
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.type P <: symbol
+
+// CHECK-NOT: {{.+}}
+.type Q = P
+
+// CHECK-NOT: {{.+}}
+.type R = P | Q

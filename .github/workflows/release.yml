@@ -1,0 +1,29 @@
+on:
+  push:
+    tags:
+    - 'v*'
+
+name: release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Deps
+      run: |
+        apt-get install -y musl-tools
+        rustup target add x86_64-unknown-linux-musl
+
+    - name: Build static
+      run: |
+        make static
+        cp target/x86_64-unknown-linux-musl/release/souffle-lint .
+
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "souffle-lint"
+        body: "See [CHANGELOG.md](https://github.com/langston-barrett/souffle-lint/blob/main/CHANGELOG.md)"
+        draft: true
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,28 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-binop-const --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-binop-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(1 + 2).
+
+// CHECK-NEXT: warn[simpl-binop-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f() :- g(x), x = 2 + 2.
+
+// CHECK-NEXT: warn[simpl-binop-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(8 - 2).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f(3).
+
+// CHECK-NOT: {{.+}}
+f(3 % 4).
+
+// CHECK-NOT: {{.+}}
+f(cat("foo", "bar")).
+
+// CHECK-NOT: {{.+}}
+f("string").

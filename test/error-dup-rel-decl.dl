@@ -1,0 +1,19 @@
+// RUN: souffle-lint lint --no-fail --only=error-dup-rel-decl --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[error-dup-rel-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+.decl f()
+.decl f()
+
+// CHECK: warn[error-dup-rel-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 2]]:{{[0-9]+}}-[[# @LINE + 2]]:{{[0-9]+}}
+.decl g(X: number)
+
+.decl g(Y: symbol)
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.decl h()

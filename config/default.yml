@@ -1,0 +1,258 @@
+rules:
+
+# TODO(lb): Bitwise identities
+
+- name: depr-rel-qual
+  short: Deprecated relation qualifier
+  examples:
+  - before: |
+      .decl f(X: number) input
+    after: |
+      .decl f(X: number)
+      .input f
+  - before: |
+      .decl g() printsize
+    after: |
+      .decl g()
+      .printsize g
+  queries:
+  - |
+    (relation_qualifier "input")
+  - |
+    (relation_qualifier "output")
+  - |
+    (relation_qualifier "printsize")
+
+- name: depr-type-decl
+  short: Deprecated type declaration
+  examples:
+  - before: |
+      .number_type T
+    after: |
+      .type T <: number
+  - before: |
+      .symbol_type T
+    after: |
+      .type T <: symbol
+  queries:
+  - |
+    (legacy_type_decl)
+
+- name: error-dup-rel-decl
+  short: Duplicated relation declaration
+  long: >
+    Conflicting declarations given for relation.
+    Try deleting one.
+    Soufflé would treat this as an error.
+  captures: true
+  examples:
+  - before: |
+      .decl f()
+      .decl f()
+    after: |
+      .decl f()
+  queries:
+  - |
+    (
+      (program
+        (relation_decl (ident) @first)
+        (relation_decl (ident) @second))
+      (#eq? @first @second)
+    )
+
+- name: error-dup-type-decl
+  short: Duplicated type declaration
+  long: >
+    Conflicting definitions given for type.
+    Try deleting one.
+    Soufflé would treat this as an error.
+  captures: true
+  examples:
+  - before: |
+      .type Foo <: symbol
+      .type Foo <: number
+    after: |
+      .type Foo <: number
+  queries:
+  - |
+    (
+      (program
+        (type_decl (subtype left: (ident) @first))
+        (type_decl (subtype left: (ident) @second)))
+      (#eq? @first @second)
+    )
+
+- name: simpl-binop-const
+  short: Simplify constant binary operation (+, -)
+  examples:
+  - before: |
+      even(2 + 2).
+    after: |
+      even(4).
+  queries:
+  - |
+    (binary_op
+      left: (argument (constant))
+      operator: "+"
+      right: (argument (constant)))
+  - |
+    (binary_op
+      left: (argument (constant))
+      operator: "-"
+      right: (argument (constant)))
+
+- name: simpl-binop-id
+  short: Simplify binary operation identity
+  examples:
+  - before: |
+      even(2 + 0).
+    after: |
+      even(2).
+  - before: |
+      num(1 * x) :- even(x).
+    after: |
+      num(x) :- even(x).
+  queries:
+  - |
+    (
+       (binary_op
+         operator: "+"
+         (argument (constant (number (integer (decimal) @const)))))
+       (#match? @const "0")
+    )
+  - |
+    (
+       (binary_op
+         (argument (constant (number (integer (decimal) @const))))
+         operator: "+")
+       (#match? @const "0")
+    )
+  - |
+    (
+       (binary_op
+         operator: "-"
+         (argument (constant (number (integer (decimal) @const)))))
+       (#match? @const "0")
+    )
+  - |
+    (
+       (binary_op
+         operator: "*"
+         (argument (constant (number (integer (decimal) @const)))))
+       (#match? @const "1")
+    )
+  - |
+    (
+       (binary_op
+         (argument (constant (number (integer (decimal) @const))))
+         operator: "*")
+       (#match? @const "1")
+    )
+  - |
+    (
+       (binary_op
+         operator: "/"
+         (argument (constant (number (integer (decimal) @const)))))
+       (#match? @const "1")
+    )
+
+- name: simpl-neg-double
+  short: Remove double negation of atom.
+  captures: true
+  examples:
+  - before: |
+      g() :- h(3), !!f().
+    after: |
+      g() :- h(3), f().
+  - before: |
+      g() :- !!!f().
+    after: |
+      g() :- !f().
+  queries:
+  - |
+    (rule
+      (monotonic_rule
+        body:
+          (disjunction
+            (conjunction
+              (negation)
+              .
+              (negation)+
+              .
+              (atom (qualified_name (ident)))) @conj)))
+
+- name: simpl-dup-conj
+  short: Remove duplicated atom in conjunction
+  examples:
+  - before: |
+      f(x) :- g(x), h(x), g(x).
+    after: |
+      f(x) :- g(x), h(x).
+  queries:
+  - |
+    (
+      (conjunction
+        (atom) @first
+        (atom) @second)
+      (#eq? @first @second)
+    )
+
+- name: simpl-dup-fact
+  short: Remove duplicated fact
+  captures: true
+  slow: true
+  examples:
+  - before: |
+      f(0).
+      f(0).
+    after: |
+      f(0).
+  queries:
+  - |
+    (
+      (program
+        (fact) @first
+        (fact) @second)
+      (#eq? @first @second)
+    )
+
+- name: simpl-dup-rule
+  short: Remove duplicated rule
+  captures: true
+  slow: true
+  examples:
+  - before: |
+      f(x) :- g(x).
+      f(x) :- g(x).
+    after: |
+      f(x) :- g(x).
+  queries:
+  - |
+    (
+      (program
+        (rule) @first
+        (rule) @second)
+      (#eq? @first @second)
+    )
+
+- name: simpl-rule-fact
+  short: Remove rule with fact for a body.
+  captures: true
+  slow: true
+  examples:
+  - before: |
+      f(0).
+      g() :- f(0).
+    after: |
+      f(0).
+      g().
+  queries:
+  # It's hoped the anchors make this more performant... Doesn't appear to help
+  # much.
+  - |
+    (
+      (program
+        (fact (atom) @fact)
+        (rule (monotonic_rule body: (disjunction . (conjunction . (atom) @rule .) .))))
+      (#eq? @fact @rule)
+    )

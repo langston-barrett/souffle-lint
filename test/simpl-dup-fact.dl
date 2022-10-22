@@ -1,0 +1,30 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-dup-fact --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-dup-fact] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f().
+f().
+
+// CHECK-NEXT: warn[simpl-dup-fact] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f(5).
+f(5).
+
+// CHECK-NEXT: warn[simpl-dup-fact] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f("str").
+f("str").
+
+// CHECK-NEXT: warn[simpl-dup-fact] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f(nil).
+f(nil).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+g().
+
+// CHECK-NOT: {{.+}}
+h(0).
+h(1).

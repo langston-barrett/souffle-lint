@@ -1,0 +1,37 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-binop-id --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(2 + 0).
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(0 + 8).
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(1234 - 0).
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(4 * 1).
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(1 * 18).
+
+// CHECK: warn[simpl-binop-id] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(4 / 1).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f(3).
+
+// CHECK-NOT: {{.+}}
+f(2 + 1).
+
+// CHECK-NOT: {{.+}}
+f(4 * 1).
+
+// CHECK-NOT: {{.+}}
+f(1 / 4).

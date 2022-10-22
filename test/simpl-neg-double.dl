@@ -1,0 +1,29 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-neg-double --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-neg-double] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+g() :- !!f().
+
+// CHECK: warn[simpl-neg-double] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+g() :- h(3), !!f().
+
+// COM: TODO(lb): Not sure why this doesn't work.
+// COM: // CHECK: warn[simpl-neg-double] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+// COM: g(x) :- !j(x), !h(x), !!f(x).
+
+// CHECK: warn[simpl-neg-double] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+g() :- !!!f().
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+g() :- f().
+
+// CHECK-NOT: {{.+}}
+g(x) :- !j(x), !h(x), f(x).
+
+// CHECK-NOT: {{.+}}
+g() :- !f().

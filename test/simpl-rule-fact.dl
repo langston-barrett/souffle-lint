@@ -1,0 +1,17 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-rule-fact --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-rule-fact] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f(0).
+g() :- f(0).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+g() :- f(1).
+
+// CHECK-NOT: {{.+}}
+h().

@@ -1,0 +1,19 @@
+// RUN: souffle-lint lint --no-fail --only=depr-type-decl --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[depr-type-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.number_type T
+
+// CHECK-NEXT: warn[depr-type-decl] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.symbol_type T
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.type R = S.
+
+// CHECK-NOT: {{.+}}
+.type F <: symbol

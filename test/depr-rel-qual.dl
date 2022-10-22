@@ -1,0 +1,21 @@
+// RUN: souffle-lint lint --no-fail --only=depr-rel-qual --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[depr-rel-qual] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.decl f(X: number) input
+
+// CHECK-NEXT: warn[depr-rel-qual] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.decl g() printsize
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.decl f(X: number)
+.input f
+
+// CHECK-NOT: {{.+}}
+.decl g()
+.printsize g

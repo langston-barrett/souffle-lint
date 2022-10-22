@@ -1,0 +1,21 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-dup-conj --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-dup-conj] {{.+}}.dl:[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 2]]:{{[0-9]+}}
+f() :-
+  g(),
+  g().
+
+// CHECK-NEXT: warn[simpl-dup-conj] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f() :- g(), h(), g().
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f() :- g(), h().
+
+// CHECK-NOT: {{.+}}
+f() :- g(x), g(y).

@@ -1,0 +1,25 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-dup-rule --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-dup-rule] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f() :- g().
+f() :- g().
+
+// CHECK-NEXT: warn[simpl-dup-rule] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}},[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+f(x) :- g(x).
+f(x) :- g(x).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f() :- not_duplicated().
+
+// CHECK-NOT: {{.+}}
+one_rule() :- g().
+
+// CHECK-NOT: {{.+}}
+f(x) :- g(), h(x).
+f(x) :- h(x), g().

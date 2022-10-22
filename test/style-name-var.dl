@@ -1,0 +1,26 @@
+// RUN: souffle-lint lint --no-fail --only=style-name-var --format=oneline --config ../config/style.yml %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[style-name-var] {{.+}}.dl:[[# @LINE + 1]]:{{[0-9]+}}-[[# @LINE + 1]]:{{[0-9]+}}
+// CHECK-NEXT: warn[style-name-var] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(x) :- g(x).
+
+// CHECK: warn[style-name-var] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(X) :- g(X), h(y).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f(3).
+
+// CHECK-NOT: {{.+}}
+f() :- g(Var).
+
+// CHECK-NOT: {{.+}}
+f() :- g(_).
+
+// CHECK-NOT: {{.+}}
+f(X) :- g(X).

@@ -1,0 +1,8 @@
+# RUN: (souffle-lint lint --config=%s simpl-binop-const.dl 2>&1 || true) | FileCheck %s
+# CHECK: Error: No queries for rule bad-rule-no-queries
+
+rules:
+- name: bad-rule-no-queries
+  short: No queries
+  examples: []
+  queries: []

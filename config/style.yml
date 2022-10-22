@@ -1,0 +1,26 @@
+rules:
+- name: style-name-var
+  short: Variable names should be CamelCase
+  captures: false
+  examples:
+  - before: |
+      f(x) :- g(x).
+    after: |
+      f(X) :- g(X).
+  queries:
+  - |
+    (
+      (variable) @var
+      (#not-match? @var "^[A-Z][A-Za-z_\?]*$")
+    )
+
+# - name: style-name-rel
+#   short: Relation names should be snake_case
+#   captures: false
+#   examples:
+#   - before: |
+#       F(X) :- SNAKE_CASE(X).
+#     after: |
+#       f(X) :- snake_case(X).
+#   # TODO(lb):
+#   queries: []
