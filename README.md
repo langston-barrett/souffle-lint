@@ -12,8 +12,8 @@ A linter for [Soufflé Datalog][souffle], based on
 - [souffle-lint](#souffle-lint)
     - [Contents](#contents)
     - [Build and Install](#build-and-install)
-        - [Build From Source](#build-from-source)
         - [Install from a Release](#install-from-a-release)
+        - [Build From Source](#build-from-source)
     - [Usage](#usage)
         - [Pre-Processing](#pre-processing)
     - [Ignoring Rules](#ignoring-rules)
@@ -23,12 +23,15 @@ A linter for [Soufflé Datalog][souffle], based on
     - [Development](#development)
         - [Tests](#tests)
         - [Benchmarks](#benchmarks)
+        - [Releasing](#releasing)
 
 <!-- markdown-toc end -->
 
 ## Build and Install
 
-For now, build from source with `cargo`.
+### Install from a Release
+
+Statically-linked binaries are available on the [releases page][releases].
 
 ### Build From Source
 
@@ -40,10 +43,6 @@ To install, just copy the binary somewhere:
 ```
 cp target/release/souffle-lint /usr/bin
 ```
-
-### Install from a Release
-
-Statically-linked binaries are available on the [releases page][releases].
 
 ## Usage
 
