@@ -191,6 +191,14 @@ lit --path=$PWD/target/debug test/
 Large Soufflé files are available in `bench/`. Try passing `--trace` to
 `souffle-lint`. Compare performance to `souffle --show=parse-errors`.
 
+### Releasing
+
+1. Update [`CHANGELOG.md`](./CHANGELOG.md)
+2. Update the version number in [`Cargo.toml`](./Cargo.toml)
+3. `git checkout main && git pull origin && git tag -a vX.Y.Z -m vX.Y.Z && git push --tags`
+4. `cargo publish`
+5. Release the pre-release created by CI
+
 [filecheck]: https://www.llvm.org/docs/CommandGuide/FileCheck.html
 [lit]: https://llvm.org/docs/CommandGuide/lit.html
 [souffle]: https://souffle-lang.github.io/index.html
