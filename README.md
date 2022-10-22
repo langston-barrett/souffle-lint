@@ -43,7 +43,7 @@ cp target/release/souffle-lint /usr/bin
 
 ### Install from a Release
 
-TBD. <!-- TODO(lb)  -->
+TBD. <!-- TODO(#1)  -->
 
 ## Usage
 
@@ -100,7 +100,7 @@ for information about common prefixes.
 
 Ignoring a specific warning on a specific line is not yet implemented.
 
-<!-- TODO(lb): Implement me! 
+<!-- TODO(#5): Implement me! 
 
 You can ignore a warning for a specific line by by placing a comment of the form `ignore[<warning-name>]` on the line before, e.g.,
 ```
