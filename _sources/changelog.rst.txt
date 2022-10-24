@@ -6,6 +6,28 @@ Changelog
 
 .. TODO(lb): How to put the hyperlink targets at the end?
 
+`0.2.0 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.2.0>`_ - 2022-10-24
+============================================================================================
+
+`Compare to v0.1.2 <https://github.com/langston-barrett/souffle-lint/compare/v0.1.2...v0.2.0>`_
+
+Added
+-----
+
+- Online documentation! https://langston-barrett.github.io/souffle-lint/
+- ``man`` subcommand to display documentation via ``man``
+- Configuration files may now contain an ``ignore:`` key that works like the
+  ``--ignore`` flag of ``lint``.
+- Small documentation improvements.
+
+Changed
+-------
+
+- ``lint`` now emits a warning on parse errors
+- Upgraded to ``souffle-tree-sitter`` v0.4.0, with substantial changes to the
+  grammar (i.e., query patterns).
+
+
 `0.1.2 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.1.2>`_ - 2022-10-24
 ============================================================================================
 
