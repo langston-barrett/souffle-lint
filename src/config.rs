@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, Eq, PartialEq, Debug)]
 pub struct Config {
     #[serde(default)] // Empty
     pub ignore: Vec<String>,
     pub rules: Vec<Rule>,
 }
 
-#[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, Eq, PartialEq, Debug)]
 pub struct Rule {
     pub name: String,
     pub short: String,
@@ -22,7 +22,7 @@ pub struct Rule {
     pub examples: Vec<Example>,
 }
 
-#[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, Eq, PartialEq, Debug)]
 pub struct Example {
     pub before: String,
     pub after: String,
@@ -36,11 +36,13 @@ impl Config {
         }
     }
 
-    // TODO(lb): Merge ignores
     pub fn merge(configs: Vec<Config>) -> Config {
         let mut c = Config::new();
-        for config in configs {
-            c.rules.extend(config.rules);
+        for config in &configs {
+            c.rules.extend(config.rules.clone());
+        }
+        for config in &configs {
+            c.ignore.extend(config.ignore.clone());
         }
         c
     }
