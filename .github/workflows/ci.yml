@@ -61,12 +61,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
+    - name: Build deps
+      run: |
+        pip install -r doc/requirements.txt
+
     - name: Format
       run: cargo fmt && git diff --exit-code
+
     - name: Deps
       run: |
         rustup update
         rustup component add clippy
+
     - name: Lint
       run: make lint
 

@@ -38,7 +38,7 @@ fmt:
 	$(CARGO) fmt
 
 .PHONY: lint
-lint:
+lint: doc
 	$(CARGO) clippy -- \
 	  -D warnings \
 	  -D clippy::unnecessary_wraps
