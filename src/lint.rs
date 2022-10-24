@@ -280,7 +280,9 @@ pub fn query<'a>(
             query_text.clone() + "@capture"
         };
 
-        let q = info_span!("new query").in_scope(|| Query::new(language, &final_text))?;
+        let q = info_span!("new query")
+            .in_scope(|| Query::new(language, &final_text))
+            .with_context(|| format!("Failed to parse query {}", &final_text))?;
         let mut qc = QueryCursor::new();
         let matches = qc.matches(&q, tree.root_node(), source.as_bytes());
         for m in matches {
@@ -305,7 +307,9 @@ pub fn query<'a>(
                     node_text,
                     start: c.node.start_position(),
                     end: c.node.end_position(),
-                    context: context_for_node(source, c.node)?.map(Box::new),
+                    context: context_for_node(source, c.node)
+                        .context("Failed to retrieve context for node")?
+                        .map(Box::new),
                 });
             }
             diags.push(Diagnostic {

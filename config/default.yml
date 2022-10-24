@@ -17,11 +17,11 @@ rules:
       .printsize g
   queries:
   - |
-    (relation_qualifier "input")
+    (relation_decl qualifier: "input")
   - |
-    (relation_qualifier "output")
+    (relation_decl qualifier: "output")
   - |
-    (relation_qualifier "printsize")
+    (relation_decl qualifier: "printsize")
 
 - name: depr-type-decl
   short: Deprecated type declaration
@@ -92,14 +92,14 @@ rules:
   queries:
   - |
     (binary_op
-      left: (argument (constant))
+      left: (constant)
       operator: "+"
-      right: (argument (constant)))
+      right: (constant))
   - |
     (binary_op
-      left: (argument (constant))
+      left: (constant)
       operator: "-"
-      right: (argument (constant)))
+      right: (constant))
 
 - name: simpl-binop-id
   short: Simplify binary operation identity
@@ -117,13 +117,13 @@ rules:
     (
        (binary_op
          operator: "+"
-         (argument (constant (number (integer (decimal) @const)))))
+         (constant (number (integer (decimal)  @const))))
        (#match? @const "0")
     )
   - |
     (
        (binary_op
-         (argument (constant (number (integer (decimal) @const))))
+         (constant (number (integer (decimal) @const)))
          operator: "+")
        (#match? @const "0")
     )
@@ -131,20 +131,20 @@ rules:
     (
        (binary_op
          operator: "-"
-         (argument (constant (number (integer (decimal) @const)))))
+         (constant (number (integer (decimal) @const))))
        (#match? @const "0")
     )
   - |
     (
        (binary_op
          operator: "*"
-         (argument (constant (number (integer (decimal) @const)))))
+         (constant (number (integer (decimal) @const))))
        (#match? @const "1")
     )
   - |
     (
        (binary_op
-         (argument (constant (number (integer (decimal) @const))))
+         (constant (number (integer (decimal) @const)))
          operator: "*")
        (#match? @const "1")
     )
@@ -152,7 +152,7 @@ rules:
     (
        (binary_op
          operator: "/"
-         (argument (constant (number (integer (decimal) @const)))))
+         (constant (number (integer (decimal) @const))))
        (#match? @const "1")
     )
 
@@ -170,16 +170,15 @@ rules:
       g() :- !f().
   queries:
   - |
-    (rule
-      (monotonic_rule
-        body:
-          (disjunction
-            (conjunction
-              (negation)
-              .
-              (negation)+
-              .
-              (atom (qualified_name (ident)))) @conj)))
+    (monotonic_rule
+      body:
+        (disjunction
+          (conjunction
+            (negation)
+            .
+            (negation)+
+            .
+            (atom (qualified_name (ident)))) @conj))
 
 - name: simpl-dup-conj
   short: Remove duplicated atom in conjunction
@@ -230,8 +229,15 @@ rules:
   - |
     (
       (program
-        (rule) @first
-        (rule) @second)
+        (monotonic_rule) @first
+        (monotonic_rule) @second)
+      (#eq? @first @second)
+    )
+  - |
+    (
+      (program
+        (subsumptive_rule) @first
+        (subsumptive_rule) @second)
       (#eq? @first @second)
     )
 
@@ -253,6 +259,6 @@ rules:
     (
       (program
         (fact (atom) @fact)
-        (rule (monotonic_rule body: (disjunction . (conjunction . (atom) @rule .) .))))
+        (monotonic_rule body: (disjunction . (conjunction . (atom) @rule .) .)))
       (#eq? @fact @rule)
     )
