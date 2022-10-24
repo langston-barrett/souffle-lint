@@ -92,6 +92,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="config.html">
+   Configuration
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="changelog.html">
    Changelog
   </a>
@@ -265,11 +270,6 @@ title="Print to PDF"
    Pre-Processing
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ignoring-rules">
-   Ignoring Rules
-  </a>
- </li>
 </ul>
 
     </nav>
@@ -292,11 +292,6 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#pre-processing">
    Pre-Processing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ignoring-rules">
-   Ignoring Rules
   </a>
  </li>
 </ul>
@@ -326,7 +321,7 @@ souffle-lint lint ./**/*.dl
 <p>The exit code will be <code class="docutils literal notranslate"><span class="pre">0</span></code> if <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> succeeded with no warnings,
 <code class="docutils literal notranslate"><span class="pre">1</span></code> if there were any warnings, or <code class="docutils literal notranslate"><span class="pre">2</span></code> if there was a problem (e.g., a parse
 error or bad configuration).</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">--help</span></code> for more options.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">--help</span></code> for more options and <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> for configuration.</p>
 <div class="section" id="pre-processing">
 <h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">#</a></h2>
 <p>Soufflé runs the C pre-processor (CPP) on Datalog files by default, and it is
@@ -340,23 +335,6 @@ souffle-lint lint out.dl
 <p><code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> doesn’t (<a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/17">yet</a>) take advantage of the <code class="docutils literal notranslate"><span class="pre">#line</span></code>
 directives in the CPP output, so the line numbers in its output won’t correspond
 to your source file.</p>
-</div>
-<div class="section" id="ignoring-rules">
-<h2>Ignoring Rules<a class="headerlink" href="#ignoring-rules" title="Permalink to this headline">#</a></h2>
-<p>Each rule has an associated name. These names are visible in the list shown by
-the <code class="docutils literal notranslate"><span class="pre">info</span></code> command, and also in warning messages. For example, in the
-following message, the rule name is <code class="docutils literal notranslate"><span class="pre">error-dup-type-decl</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">warn</span><span class="p">[</span><span class="n">error</span><span class="o">-</span><span class="n">dup</span><span class="o">-</span><span class="nb">type</span><span class="o">-</span><span class="n">decl</span><span class="p">]</span> <span class="n">Duplicated</span> <span class="nb">type</span> <span class="n">declaration</span>
-</pre></div>
-</div>
-<p>You can disable a rule entirely by passing <code class="docutils literal notranslate"><span class="pre">--ignore=&lt;rule-name&gt;</span></code> on the
-command line. In fact, you can pass a <em>prefix</em> to <code class="docutils literal notranslate"><span class="pre">--ignore</span></code>; any rules that
-start with that prefix will be ignored. For example, <code class="docutils literal notranslate"><span class="pre">--ignore=simpl</span></code> will
-disable any rules with names starting with <code class="docutils literal notranslate"><span class="pre">simpl</span></code>. See <a class="reference internal" href="categories.html"><span class="doc">Categories</span></a> for
-information about common prefixes.</p>
-<p>Ignoring a specific warning on a specific line is <a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/5">not yet implemented</a>.</p>
-<p>Rules with slow execution times are disabled by default, you can enable them
-with <code class="docutils literal notranslate"><span class="pre">souffle-lint</span> <span class="pre">lint</span> <span class="pre">--slow</span></code>.</p>
 </div>
 </div>
 
