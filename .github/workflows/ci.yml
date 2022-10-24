@@ -6,13 +6,16 @@ on:
     - main
   pull_request:
 
+env:
+  # The NAME makes it easier to copy/paste snippets from other CI configs
+  NAME: souffle-lint
+
 jobs:
   deb:
     # This job currently takes longer than the `test` job. To keep CI times low
     # for pull requests while maintaining our ability to catch problems before
     # releases, we only run it on main.
-    # TODO(lb):
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
