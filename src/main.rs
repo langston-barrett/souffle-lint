@@ -15,8 +15,10 @@ mod config;
 mod filter;
 mod interactive;
 mod lint;
-mod man;
 mod parse;
+
+#[cfg(feature = "man")]
+mod man;
 
 const EXIT_SUCCESS: i32 = 0;
 const EXIT_FAIL_LINT: i32 = 1;
@@ -301,6 +303,7 @@ fn main() -> Result<()> {
             no_fail,
         )?,
         cli::Cmd::Info { config, rule } => info(&config, &rule, &From::from(args.interactive))?,
+        #[cfg(feature = "man")]
         cli::Cmd::Man {} => {
             if man::man()?.success() {
                 EXIT_SUCCESS
