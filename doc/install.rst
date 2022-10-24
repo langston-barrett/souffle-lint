@@ -17,4 +17,9 @@ You can also install souffle-lint via Cargo and crates.io:
 
    cargo install souffle-lint
 
+Build and Install from Source
+=============================
+
+See :doc:`build`.
+
 .. _releases page: https://github.com/langston-barrett/souffle-lint/releases
