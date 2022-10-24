@@ -17,6 +17,10 @@ repository = "https://github.com/langston-barrett/souffle-lint"
 panic = "abort"
 lto = "thin"
 
+[build-dependencies]
+clap = { version = "4.0", features = ["derive", "cargo", "env"] }
+clap_mangen = "0.2"
+
 [dependencies]
 anyhow = "1.0"
 atty = "0.2"
