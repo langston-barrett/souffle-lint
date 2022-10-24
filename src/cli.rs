@@ -87,6 +87,8 @@ pub enum Cmd {
         #[arg(default_value = None, value_name = "RULE")]
         rule: Option<String>,
     },
+    /// Show the full manual
+    Man {},
     /// Print Soufflé Datalog files as S-expressions
     Sexp {
         /// Soufflé Datalog file(s) to print; if empty, parse from stdin

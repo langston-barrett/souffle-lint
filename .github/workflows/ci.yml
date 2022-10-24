@@ -75,10 +75,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
+    - name: Build deps
+      run: |
+        pip install -r doc/requirements.txt
+
     - run: make build
-    - name: Deps
+
+    - name: Test deps
       run: |
         pip install lit==15
         sudo apt-get install -y llvm-11-tools
         sudo update-alternatives --install /usr/bin/FileCheck FileCheck /usr/bin/FileCheck-11 60
+
     - run: make test
