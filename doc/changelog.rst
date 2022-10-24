@@ -6,6 +6,19 @@ Changelog
 
 .. TODO(lb): How to put the hyperlink targets at the end?
 
+`0.2.1 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.2.1>`_ - 2022-10-24
+============================================================================================
+
+`Compare to v0.2.0 <https://github.com/langston-barrett/souffle-lint/compare/v0.2.0...v0.2.1>`_
+
+Fixed
+-----
+
+- Cargo now builds the manual inside of ``target/`` instead of ``doc/build``.
+- Fixed CI builds of static executables and Debian packages by disabling the
+  ``man`` subcommand for releases (see `#29
+  <https://github.com/langston-barrett/souffle-lint/issues/29>`_).
+
 `0.2.0 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.2.0>`_ - 2022-10-24
 ============================================================================================
 
