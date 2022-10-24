@@ -30,12 +30,12 @@ A linter for [Soufflé Datalog][souffle], based on
 ## Build and Install
 
 <!-- TODO(lb): cargo install -->
-<!-- TODO(lb): deb install -->
 <!-- TODO(lb): nix install -->
 
 ### Install from a Release
 
-Statically-linked binaries are available on the [releases page][releases].
+Statically-linked binaries and Debian packages are available on the [releases
+page][releases].
 
 ### Build From Source
 
