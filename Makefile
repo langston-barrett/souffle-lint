@@ -13,21 +13,26 @@ build:
 
 # requires: apt-get install -y musl-tools
 # requires: rustup target add x86_64-unknown-linux-musl
+# TODO(lb): Enable man feature
 .PHONY: static
 static:
-	$(CARGO) build $(CARGO_FLAGS) --release --target=x86_64-unknown-linux-musl
+	$(CARGO) build $(CARGO_FLAGS) \
+	  --no-default-features \
+	  --release \
+	  --target=x86_64-unknown-linux-musl
 
 .PHONY: check
 check:
 	$(CARGO) check $(CARGO_FLAGS) 
 
 # requires: cargo install cargo-deb
-#
-# NOTE: Needs static because static causes the build script to be run, which
-# generates the embedded manual.
+# TODO(lb): Enable man feature
 .PHONY: deb
-deb: static
-	$(CARGO) deb $(CARGO_FLAGS) -- --release --target=x86_64-unknown-linux-musl
+deb:
+	$(CARGO) deb $(CARGO_FLAGS) -- \
+	  --no-default-features \
+	  --release \
+	  --target=x86_64-unknown-linux-musl
 
 .PHONY: doc
 doc:
