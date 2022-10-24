@@ -17,6 +17,9 @@ See :doc:`writing` for how to write rules.
 Ignoring Rules
 ==============
 
+Ignoring a specific warning on a specific line is `not yet implemented
+<https://github.com/langston-barrett/souffle-lint/issues/5>`_.
+
 Via the CLI
 -----------
 
@@ -50,9 +53,6 @@ and pass ``--config`` to ``lint``
 .. code-block:: bash
 
   souffle-lint lint --config ignores.yml program.dl
-
-Ignoring a specific warning on a specific line is `not yet implemented
-<https://github.com/langston-barrett/souffle-lint/issues/5>`_.
 
 ..
    You can ignore a warning for a specific line by by placing a comment of the
