@@ -61,7 +61,7 @@ fn clap_man(path: &Path) {
     print_manpages(path);
 }
 
-fn sphinx_man() -> std::process::Output {
+fn sphinx_man(path: &Path) -> std::process::Output {
     for rst in glob("doc/*.rst").expect("Failed to read glob pattern") {
         println!(
             "cargo:rerun-if-changed=doc{}",
@@ -69,13 +69,19 @@ fn sphinx_man() -> std::process::Output {
         );
     }
     std::process::Command::new("make")
-        .args(["-C", "doc", "man"])
+        .args([
+            "-C",
+            "doc",
+            "man",
+            &format!("BUILDDIR={}", path.to_string_lossy()),
+        ])
         .output()
         .expect("failed to execute `make -C doc man`")
 }
 
 fn main() {
-    let assets = target_assets().unwrap();
+    let mut assets = target_assets().unwrap();
     clap_man(&assets);
-    sphinx_man();
+    assets.push("doc");
+    sphinx_man(&assets);
 }
