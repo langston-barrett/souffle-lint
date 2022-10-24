@@ -1,6 +1,6 @@
-===============
-Rule Categories
-===============
+==========
+Categories
+==========
 
 By convention, rules have names starting with common prefixes:
 
