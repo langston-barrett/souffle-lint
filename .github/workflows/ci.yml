@@ -22,8 +22,10 @@ jobs:
       run: make lint
 
   deb:
-    # TODO(lb): This takes a while, maybe only run it on the main branch.
-    # if: github.ref == 'refs/heads/main'
+    # This job currently takes longer than the `test` job. To keep CI times low
+    # for pull requests while maintaining our ability to catch problems before
+    # releases, we only run it on main.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
