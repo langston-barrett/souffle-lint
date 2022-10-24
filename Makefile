@@ -22,13 +22,12 @@ check:
 	$(CARGO) check $(CARGO_FLAGS) 
 
 # requires: cargo install cargo-deb
-# TODO(lb): Enable man feature
+#
+# NOTE: Needs static because static causes the build script to be run, which
+# generates the embedded manual.
 .PHONY: deb
-deb:
-	$(CARGO) deb $(CARGO_FLAGS) -- \
-	  --no-default-features \
-	  --release \
-	  --target=x86_64-unknown-linux-musl
+deb: static
+	$(CARGO) deb $(CARGO_FLAGS) -- --release --target=x86_64-unknown-linux-musl
 
 .PHONY: doc
 doc:
