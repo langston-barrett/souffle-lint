@@ -12,6 +12,7 @@ Source available `on Github <src>`_.
    :caption: User Guide
 
    categories
+   config
    changelog
    install
    usage
