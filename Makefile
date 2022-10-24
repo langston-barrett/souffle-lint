@@ -1,28 +1,30 @@
 CARGO = cargo
 LIT = lit
 
+CARGO_FLAGS = 
+
 DL = $(shell ls ./**/*.dl)
 RS = $(shell ls ./**/*.rs)
 TOML = $(shell ls ./**/*.toml)
 
 .PHONY: build
 build:
-	$(CARGO) build
+	$(CARGO) $(CARGO_FLAGS) build
 
 # requires: apt-get install -y musl-tools
 # requires: rustup target add x86_64-unknown-linux-musl
 .PHONY: static
 static:
-	$(CARGO) build --release --target=x86_64-unknown-linux-musl
+	$(CARGO) build $(CARGO_FLAGS) --release --target=x86_64-unknown-linux-musl
 
 .PHONY: check
 check:
-	$(CARGO) check
+	$(CARGO) check $(CARGO_FLAGS) 
 
 # requires: cargo install cargo-deb
 .PHONY: deb
 deb:
-	$(CARGO) deb -- --release --target=x86_64-unknown-linux-musl
+	$(CARGO) deb  $(CARGO_FLAGS) -- --release --target=x86_64-unknown-linux-musl
 
 .PHONY: doc
 doc:
@@ -35,11 +37,11 @@ entr:
 
 .PHONY: fmt
 fmt:
-	$(CARGO) fmt
+	$(CARGO) fmt $(CARGO_FLAGS)
 
 .PHONY: lint
-lint: doc
-	$(CARGO) clippy -- \
+lint:
+	$(CARGO) clippy $(CARGO_FLAGS) -- \
 	  -D warnings \
 	  -D clippy::unnecessary_wraps
 
@@ -49,7 +51,7 @@ lit: build
 
 .PHONY: unit
 unit:
-	$(CARGO) test
+	$(CARGO) test $(CARGO_FLAGS)
 
 .PHONY: test
 test: unit lit

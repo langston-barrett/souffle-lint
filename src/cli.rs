@@ -88,6 +88,7 @@ pub enum Cmd {
         rule: Option<String>,
     },
     /// Show the full manual
+    #[cfg(feature = "man")]
     Man {},
     /// Print Soufflé Datalog files as S-expressions
     Sexp {
