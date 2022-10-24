@@ -21,7 +21,9 @@ jobs:
     - name: Lint
       run: make lint
 
-  static:
+  deb:
+    # TODO(lb): This takes a while, maybe only run it on the main branch.
+    # if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -29,7 +31,8 @@ jobs:
       run: |
         sudo apt-get install -y musl-tools
         rustup target add x86_64-unknown-linux-musl
-    - run: make static
+        cargo install cargo-deb
+    - run: make deb
 
   test:
     runs-on: ubuntu-latest

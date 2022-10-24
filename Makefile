@@ -19,6 +19,11 @@ static:
 check:
 	$(CARGO) check
 
+# requires: cargo install cargo-deb
+.PHONY: deb
+deb:
+	$(CARGO) deb -- --release --target=x86_64-unknown-linux-musl
+
 .PHONY: entr
 entr:
 	ls Makefile $(DL) $(RS) $(TOML) | \
