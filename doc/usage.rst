@@ -58,6 +58,20 @@ start with that prefix will be ignored. For example, ``--ignore=simpl`` will
 disable any rules with names starting with ``simpl``. See :doc:`categories` for
 information about common prefixes.
 
+You can also add a key ``ignore:`` to a YAML configuration file:
+
+.. code-block:: yaml
+
+  ignore:
+  - some-rule-name
+  - another-rule-name
+
+and pass ``--config`` to ``lint``
+
+.. code-block:: bash
+
+  souffle-lint lint --config ignores.yml program.dl
+
 Ignoring a specific warning on a specific line is `not yet implemented
 <https://github.com/langston-barrett/souffle-lint/issues/5>`_.
 
