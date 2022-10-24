@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Changelog &#8212; souffle-lint  documentation</title>
+    <title>Usage &#8212; souffle-lint  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -32,8 +32,8 @@
     <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="install.html" />
-    <link rel="prev" title="Rule Categories" href="categories.html" />
+    <link rel="next" title="Build" href="build.html" />
+    <link rel="prev" title="Installation" href="install.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -91,8 +91,8 @@
    Rule Categories
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="changelog.html">
    Changelog
   </a>
  </li>
@@ -101,8 +101,8 @@
    Installation
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="usage.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Usage
   </a>
  </li>
@@ -191,7 +191,7 @@ title="Fullscreen mode"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/changelog.rst.txt"
+        <a href="_sources/usage.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -251,37 +251,13 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   0.1.2 - 2022-10-24
+  <a class="reference internal nav-link" href="#pre-processing">
+   Pre-Processing
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fixed">
-     Fixed
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   0.1.1 - 2022-10-24
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#added">
-     Added
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#changed">
-     Changed
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   0.1.0 - 2022-10-21
+  <a class="reference internal nav-link" href="#ignoring-rules">
+   Ignoring Rules
   </a>
  </li>
 </ul>
@@ -293,7 +269,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Changelog</h1>
+                <h1>Usage</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -304,37 +280,13 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   0.1.2 - 2022-10-24
+  <a class="reference internal nav-link" href="#pre-processing">
+   Pre-Processing
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fixed">
-     Fixed
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   0.1.1 - 2022-10-24
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#added">
-     Added
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#changed">
-     Changed
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   0.1.0 - 2022-10-21
+  <a class="reference internal nav-link" href="#ignoring-rules">
+   Ignoring Rules
   </a>
  </li>
 </ul>
@@ -347,39 +299,54 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
-<div class="section" id="id2">
-<h2><a class="reference external" href="https://github.com/langston-barrett/souffle-lint/releases/tag/v0.1.2">0.1.2</a> - 2022-10-24<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/langston-barrett/souffle-lint/compare/v0.1.1...v0.1.2">Compare to v0.1.1</a></p>
-<div class="section" id="fixed">
-<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p>Fixed CI uploads of releases</p></li>
-</ul>
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">#</a></h1>
+<p>Pass a list of Soufflé Datalog files to <code class="docutils literal notranslate"><span class="pre">souffle-lint</span> <span class="pre">lint</span></code>, or pass
+one on stdin:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lint a single file:</span>
+souffle-lint lint file.dl
+<span class="c1"># Lint a file from stdin:</span>
+souffle-lint lint &lt;file.dl
+<span class="c1"># Lint two files:</span>
+souffle-lint lint file.dl path/to/file2.dl
+<span class="c1"># Lint all the Soufflé Datalog files the current directory:</span>
+souffle-lint lint ./**/*.dl
+</pre></div>
 </div>
+<p>The exit code will be <code class="docutils literal notranslate"><span class="pre">0</span></code> if <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> succeeded with no warnings,
+<code class="docutils literal notranslate"><span class="pre">1</span></code> if there were any warnings, or <code class="docutils literal notranslate"><span class="pre">2</span></code> if there was a problem (e.g., a parse
+error or bad configuration).</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">--help</span></code> for more options.</p>
+<div class="section" id="pre-processing">
+<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">#</a></h2>
+<p>Soufflé runs the C pre-processor (CPP) on Datalog files by default, and it is
+customary for developers to use its functionality. The <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> parser
+does not handle CPP directives; if you use them you must run the pre-processor
+manually and then run <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> on the result. For instance,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mcpp -W <span class="m">0</span> -P your/datalog/file.dl -o out.dl
+souffle-lint lint out.dl
+</pre></div>
 </div>
-<div class="section" id="id4">
-<h2><a class="reference external" href="https://github.com/langston-barrett/souffle-lint/releases/tag/v0.1.1">0.1.1</a> - 2022-10-24<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://github.com/langston-barrett/souffle-lint/compare/v0.1.0...v0.1.1">Compare to v0.1.0</a></p>
-<div class="section" id="added">
-<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p>Releases now include Debian packages with manpages</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> doesn’t (<a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/17">yet</a>) take advantage of the <code class="docutils literal notranslate"><span class="pre">#line</span></code>
+directives in the CPP output, so the line numbers in its output won’t correspond
+to your source file.</p>
 </div>
-<div class="section" id="changed">
-<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--interactive</span></code> now properly controls coloration in the <code class="docutils literal notranslate"><span class="pre">info</span></code> subcommand</p></li>
-<li><p>Minor updates to the README</p></li>
-<li><p>Minor performance improvements</p></li>
-</ul>
+<div class="section" id="ignoring-rules">
+<h2>Ignoring Rules<a class="headerlink" href="#ignoring-rules" title="Permalink to this headline">#</a></h2>
+<p>Each rule has an associated name. These names are visible in the list shown by
+the <code class="docutils literal notranslate"><span class="pre">info</span></code> command, and also in warning messages. For example, in the
+following message, the rule name is <code class="docutils literal notranslate"><span class="pre">error-dup-type-decl</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">warn</span><span class="p">[</span><span class="n">error</span><span class="o">-</span><span class="n">dup</span><span class="o">-</span><span class="nb">type</span><span class="o">-</span><span class="n">decl</span><span class="p">]</span> <span class="n">Duplicated</span> <span class="nb">type</span> <span class="n">declaration</span>
+</pre></div>
 </div>
-</div>
-<div class="section" id="id6">
-<h2><a class="reference external" href="https://github.com/langston-barrett/souffle-lint/releases/tag/v0.1.0">0.1.0</a> - 2022-10-21<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
-<p>First release!</p>
+<p>You can disable a rule entirely by passing <code class="docutils literal notranslate"><span class="pre">--ignore=&lt;rule-name&gt;</span></code> on the
+command line. In fact, you can pass a <em>prefix</em> to <code class="docutils literal notranslate"><span class="pre">--ignore</span></code>; any rules that
+start with that prefix will be ignored. For example, <code class="docutils literal notranslate"><span class="pre">--ignore=simpl</span></code> will
+disable any rules with names starting with <code class="docutils literal notranslate"><span class="pre">simpl</span></code>. See <a class="reference internal" href="categories.html"><span class="doc">Rule Categories</span></a> for
+information about common prefixes.</p>
+<p>Ignoring a specific warning on a specific line is <a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/5">not yet implemented</a>.</p>
+<p>Rules with slow execution times are disabled by default, you can enable them
+with <code class="docutils literal notranslate"><span class="pre">souffle-lint</span> <span class="pre">lint</span> <span class="pre">--slow</span></code>.</p>
 </div>
 </div>
 
@@ -391,17 +358,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="categories.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="install.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Rule Categories</p>
+            <p class="prev-next-title">Installation</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="install.html" title="next page">
+    <a class='right-next' id="next-link" href="build.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Build</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
