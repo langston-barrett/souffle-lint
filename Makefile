@@ -24,6 +24,10 @@ check:
 deb:
 	$(CARGO) deb -- --release --target=x86_64-unknown-linux-musl
 
+.PHONY: doc
+doc:
+	$(MAKE) -C doc html
+
 .PHONY: entr
 entr:
 	ls Makefile $(DL) $(RS) $(TOML) | \
