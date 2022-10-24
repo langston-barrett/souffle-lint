@@ -1,5 +1,5 @@
 use std::fs;
-use std::io::Read;
+use std::io::{Read, Write};
 use std::process;
 
 use anyhow::{Context, Result};
@@ -74,6 +74,8 @@ fn lint_src(
         .par_iter()
         .map(|r| lint::query(language, datalog_file, &src, &tree, r))
         .collect();
+    let span = info_span!("print_diagnostics");
+    let _enter = span.enter();
     for diags in diagnostics {
         for diag in diags? {
             if !no_fail {
@@ -155,42 +157,46 @@ fn lint(
     Ok(exit)
 }
 
-fn info_rule(rule: &config::Rule) {
-    println!();
-    println!("{}: {}", rule.name.bold(), rule.short);
+fn info_rule(rule: &config::Rule, w: &mut impl Write) -> Result<()> {
+    writeln!(w)?;
+    writeln!(w, "{}: {}", rule.name.bold(), rule.short)?;
     if let Some(l) = &rule.long {
-        println!("\n{}", l);
+        writeln!(w, "\n{}", l)?;
     }
     for ex in &rule.examples {
-        println!("Example:");
+        writeln!(w, "Example:")?;
         let before_lines: Vec<_> = ex.before.lines().collect();
         let after_lines: Vec<_> = ex.after.lines().collect();
         if before_lines.len() > 1 || after_lines.len() > 1 {
-            println!("\n  Before:\n");
+            writeln!(w, "\n  Before:\n")?;
             for line in before_lines {
-                println!("    {}", line);
+                writeln!(w, "    {}", line)?;
             }
-            println!("\n  After:\n");
+            writeln!(w, "\n  After:\n")?;
             for line in after_lines {
-                println!("    {}", line);
+                writeln!(w, "    {}", line)?;
             }
         } else {
-            print!("  Before: {}", ex.before);
-            print!("  After:  {}", ex.after);
+            write!(w, "  Before: {}", ex.before)?;
+            write!(w, "  After:  {}", ex.after)?;
         }
     }
+    Ok(())
 }
 
 fn info(configs: &Vec<String>, rule_name: &Option<String>) -> Result<i32> {
     let config = merge_configs(configs, false)?;
+    // https://nnethercote.github.io/perf-book/io.html#locking
+    let stdout = std::io::stdout();
+    let mut lock = stdout.lock();
     for rule in config.rules {
         match rule_name {
             Some(name) => {
                 if &rule.name == name {
-                    info_rule(&rule);
+                    info_rule(&rule, &mut lock)?;
                 }
             }
-            None => info_rule(&rule),
+            None => info_rule(&rule, &mut lock)?,
         }
     }
     Ok(EXIT_SUCCESS)
