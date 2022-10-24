@@ -21,6 +21,7 @@ Source available `on Github <src>`_.
    :caption: Developer Guide
 
    build
+   dev
 
 ==================
 Indices and tables
