@@ -1,0 +1,11 @@
+# See config-ignore.dl
+# RUN: true
+ignore:
+- program
+rules:
+- name: program
+  short: Anything
+  examples: []
+  queries:
+  - |
+    (program)
