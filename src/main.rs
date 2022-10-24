@@ -136,13 +136,14 @@ fn lint(
     no_default_rules: bool,
     datalog_files: &Vec<String>,
     format: &cli::Format,
-    filt: &filter::RuleFilter,
+    mut filt: filter::RuleFilter,
     interactive: &interactive::Interactive,
     no_fail: bool,
 ) -> Result<i32> {
     let config = merge_configs(configs, no_default_rules)?;
     check_config(&config);
-    let rules = filter::filter(config.rules, filt);
+    filt.ignore.extend(config.ignore);
+    let rules = filter::filter(config.rules, &filt);
     if rules.is_empty() {
         eprintln!("No rules specified! Returning immediately without parsing.");
         return Ok(EXIT_OTHER);
@@ -298,7 +299,7 @@ fn main() -> Result<()> {
             no_default_rules,
             &datalog_files,
             &format,
-            &filter::RuleFilter { only, ignore, slow },
+            filter::RuleFilter { only, ignore, slow },
             &From::from(args.interactive),
             no_fail,
         )?,

@@ -1,0 +1,2 @@
+// RUN: souffle-lint lint --config=config-ignore.yml config-ignore.dl 2>&1
+.decl f()
