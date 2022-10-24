@@ -149,9 +149,9 @@ rules:
   queries:
   - |
     (binary_op
-      left: (argument (constant))
+      left: (constant)
       operator: "+"
-      right: (argument (constant)))
+      right: (constant))
 ```
 
 You can view the built-in configuration file at
