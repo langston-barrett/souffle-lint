@@ -15,6 +15,7 @@ jobs:
       run: |
         sudo apt-get install -y musl-tools
         rustup target add x86_64-unknown-linux-musl
+        cargo install cargo-deb
 
     - name: Build static executable
       run: |
