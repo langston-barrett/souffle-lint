@@ -9,9 +9,16 @@ Source available `on Github <src>`_.
 
 .. toctree::
    :hidden:
-   :caption: Contents
+   :caption: User Guide
 
    changelog
+   install
+
+.. toctree::
+   :hidden:
+   :caption: Developer Guide
+
+   build
 
 ==================
 Indices and tables
