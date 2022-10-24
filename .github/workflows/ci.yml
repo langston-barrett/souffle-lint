@@ -39,8 +39,7 @@ jobs:
 
     - name: Push docs
       uses: peaceiris/actions-gh-pages@v3
-      # TODO(lb):
-      # if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: doc/build/html
