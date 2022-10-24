@@ -28,9 +28,8 @@ jobs:
 
     - uses: ncipollo/release-action@v1
       with:
-        artifacts:
-        - "souffle-lint"
-        - "souffle-lint_*_amd64.deb"
+        artifacts: "souffle-lint,souffle-lint_*_amd64.deb"
+        artifactErrorsFailBuild: true
         body: "See [CHANGELOG.md](https://github.com/langston-barrett/souffle-lint/blob/main/CHANGELOG.md)"
         draft: true
         token: ${{ secrets.GITHUB_TOKEN }}
