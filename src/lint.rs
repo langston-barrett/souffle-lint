@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use anyhow::{Context, Result};
 use colored::Colorize;
 use tracing::info_span;
@@ -80,25 +82,31 @@ impl<'a> Fragment<'a> {
         )
     }
 
-    fn display_oneline(&self, source_filename: &str) {
+    fn display_oneline(&self, w: &mut impl Write, source_filename: &str) -> Result<()> {
         let ctx_len = self.ctx_len();
         let pos = self.display_pos(source_filename);
         assert!(ctx_len == 0 || ctx_len >= self.node_text.len());
-        // println!("{}  at {}", rpad(self.node_text.to_string(), ' ', ctx_len), pos);
-        println!(
+        // writeln!(w,"{}  at {}", rpad(self.node_text.to_string(), ' ', ctx_len), pos);
+        writeln!(
+            w,
             "at {}: {}",
             pos,
             rpad(self.node_text.to_string(), ' ', ctx_len)
-        );
+        )?;
         if let Some(ctx) = &self.context {
-            // println!("{}  in {}", ctx.node_text, ctx.display_pos(source_filename));
-            println!("in {}: {}", ctx.display_pos(source_filename), ctx.node_text);
+            // writeln!(w,"{}  in {}", ctx.node_text, ctx.display_pos(source_filename));
+            writeln!(
+                w,
+                "in {}: {}",
+                ctx.display_pos(source_filename),
+                ctx.node_text
+            )?;
         }
+        Ok(())
     }
 
-    fn display_multiline(&self, source_filename: &str) {
-        let pos = self.display_pos(source_filename);
-        println!("at {}:\n", pos);
+    fn display_multiline(&self, w: &mut impl Write, source_filename: &str) -> Result<()> {
+        writeln!(w, "at {}:\n", self.display_pos(source_filename))?;
         let mut first = true;
         for line in self.node_text.lines() {
             let mut l = line.to_string();
@@ -106,17 +114,17 @@ impl<'a> Fragment<'a> {
                 first = false;
                 l = lpad(line, ' ', self.start.column + line.len());
             }
-            println!("  {}", l);
+            writeln!(w, "  {}", l)?;
         }
-        println!();
+        writeln!(w)?;
         if let Some(ctx) = &self.context {
-            let ctx_pos = format!("in {}", ctx.display_pos(source_filename));
-            println!("{}:\n", ctx_pos);
+            writeln!(w, "in {}:\n", ctx.display_pos(source_filename))?;
             for line in ctx.node_text.lines() {
-                println!("  {}", line);
+                writeln!(w, "  {}", line)?;
             }
-            println!();
+            writeln!(w)?;
         }
+        Ok(())
     }
 
     fn can_display_oneline(&self, source_filename: &str) -> bool {
@@ -135,34 +143,37 @@ impl<'a> Fragment<'a> {
         !too_long && !newlines
     }
 
-    pub fn display(&self, source_filename: &str, verbose: bool) {
+    pub fn display(&self, w: &mut impl Write, source_filename: &str, verbose: bool) -> Result<()> {
         if !verbose && self.can_display_oneline(source_filename) {
-            self.display_oneline(source_filename);
+            self.display_oneline(w, source_filename)
         } else {
-            self.display_multiline(source_filename);
+            self.display_multiline(w, source_filename)
         }
     }
 }
 
 impl<'a> Diagnostic<'a> {
-    fn display_default(&self, color: bool, verbose: bool) {
-        println!("{}[{}] {}", warn(color), self.rule.name, self.rule.short);
+    fn display_default(&self, w: &mut impl Write, color: bool, verbose: bool) -> Result<()> {
+        writeln!(w, "{}[{}] {}", warn(color), self.rule.name, self.rule.short)?;
 
         for frag in &self.fragments {
-            frag.display(self.source_file, verbose);
+            frag.display(w, self.source_file, verbose)?;
         }
 
         if verbose {
-            println!(
+            writeln!(
+                w,
                 "{}: Run `souffle-lint info {}` for more information.",
                 hint(color),
                 self.rule.name,
-            );
+            )?;
         }
+        Ok(())
     }
 
-    fn display_oneline(&self, color: bool) {
-        print!(
+    fn display_oneline(&self, w: &mut impl Write, color: bool) -> Result<()> {
+        write!(
+            w,
             "{}[{}] {}:",
             if color {
                 "warn".bold().yellow()
@@ -171,39 +182,41 @@ impl<'a> Diagnostic<'a> {
             },
             self.rule.name,
             self.source_file,
-        );
+        )?;
         let mut first = true;
         for frag in &self.fragments {
             if first {
-                print!(
+                write!(
+                    w,
                     "{}:{}-{}:{}",
                     frag.start.row, frag.start.column, frag.end.row, frag.end.column,
-                );
+                )?;
                 first = false;
             } else {
-                print!(
+                write!(
+                    w,
                     ",{}:{}-{}:{}",
                     frag.start.row, frag.start.column, frag.end.row, frag.end.column,
-                );
+                )?;
             }
         }
-        println!();
+        writeln!(w)?;
+        Ok(())
     }
 
-    pub fn display(&self, format: &Format, interactive: &Interactive) {
+    pub fn display(
+        &self,
+        w: &mut impl Write,
+        format: &Format,
+        interactive: &Interactive,
+    ) -> Result<()> {
         let span = info_span!("display");
         let _enter = span.enter();
         match format {
-            Format::Default => {
-                self.display_default(From::from(interactive), false);
-            }
-            Format::None => {}
-            Format::Oneline => {
-                self.display_oneline(From::from(interactive));
-            }
-            Format::Verbose => {
-                self.display_default(From::from(interactive), true);
-            }
+            Format::Default => self.display_default(w, From::from(interactive), false),
+            Format::None => Ok(()),
+            Format::Oneline => self.display_oneline(w, From::from(interactive)),
+            Format::Verbose => self.display_default(w, From::from(interactive), true),
         }
     }
 }

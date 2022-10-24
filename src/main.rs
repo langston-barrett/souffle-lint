@@ -76,12 +76,16 @@ fn lint_src(
         .collect();
     let span = info_span!("print_diagnostics");
     let _enter = span.enter();
+    // https://nnethercote.github.io/perf-book/io.html#locking
+    let stdout = std::io::stdout();
+    let mut lock = stdout.lock();
     for diags in diagnostics {
         for diag in diags? {
             if !no_fail {
                 fail = true;
             }
-            diag.display(format, interactive);
+            diag.display(&mut lock, format, interactive)
+                .context("Failed to print diagnostics")?;
         }
     }
     Ok(fail)
