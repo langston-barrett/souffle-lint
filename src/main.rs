@@ -161,9 +161,22 @@ fn lint(
     Ok(exit)
 }
 
-fn info_rule(rule: &config::Rule, w: &mut impl Write) -> Result<()> {
+fn info_rule(
+    rule: &config::Rule,
+    w: &mut impl Write,
+    interactive: &interactive::Interactive,
+) -> Result<()> {
     writeln!(w)?;
-    writeln!(w, "{}: {}", rule.name.bold(), rule.short)?;
+    writeln!(
+        w,
+        "{}: {}",
+        if From::from(interactive) {
+            rule.name.bold()
+        } else {
+            rule.name.as_str().into()
+        },
+        rule.short
+    )?;
     if let Some(l) = &rule.long {
         writeln!(w, "\n{}", l)?;
     }
@@ -188,7 +201,11 @@ fn info_rule(rule: &config::Rule, w: &mut impl Write) -> Result<()> {
     Ok(())
 }
 
-fn info(configs: &Vec<String>, rule_name: &Option<String>) -> Result<i32> {
+fn info(
+    configs: &Vec<String>,
+    rule_name: &Option<String>,
+    interactive: &interactive::Interactive,
+) -> Result<i32> {
     let config = merge_configs(configs, false)?;
     // https://nnethercote.github.io/perf-book/io.html#locking
     let stdout = std::io::stdout();
@@ -197,10 +214,10 @@ fn info(configs: &Vec<String>, rule_name: &Option<String>) -> Result<i32> {
         match rule_name {
             Some(name) => {
                 if &rule.name == name {
-                    info_rule(&rule, &mut lock)?;
+                    info_rule(&rule, &mut lock, interactive)?;
                 }
             }
-            None => info_rule(&rule, &mut lock)?,
+            None => info_rule(&rule, &mut lock, interactive)?,
         }
     }
     Ok(EXIT_SUCCESS)
@@ -262,7 +279,7 @@ fn main() -> Result<()> {
             &From::from(args.interactive),
             no_fail,
         )?,
-        cli::Cmd::Info { config, rule } => info(&config, &rule)?,
+        cli::Cmd::Info { config, rule } => info(&config, &rule, &From::from(args.interactive))?,
         cli::Cmd::Sexp { datalog_files } => sexp(&datalog_files)?,
     })
 }
