@@ -11,6 +11,7 @@ Source available `on Github <src>`_.
    :hidden:
    :caption: User Guide
 
+   categories
    changelog
    install
    usage
