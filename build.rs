@@ -1,10 +1,11 @@
-// References:
+// ReferencelOs:
 // https://github.com/sondr3/clap-man-example/blob/main/build.rs
 // https://github.com/clap-rs/clap/issues/4231
 // https://github.com/clap-rs/clap/discussions/3603
 
 use clap::{Command, CommandFactory};
 use clap_mangen::Man;
+use glob::glob;
 use std::{
     env,
     fs::File,
@@ -40,12 +41,9 @@ fn print_manpages(dir: &Path) {
     print(dir, &app)
 }
 
-fn main() {
-    println!("cargo:rerun-if-changed=src/cli.rs");
-    println!("cargo:rerun-if-changed=man");
-
+fn target_assets() -> Option<PathBuf> {
     let outdir = match env::var_os("OUT_DIR") {
-        None => return,
+        None => return None,
         Some(outdir) => outdir,
     };
 
@@ -54,6 +52,30 @@ fn main() {
     let mut path = out_path.ancestors().nth(4).unwrap().to_owned();
     path.push("assets");
     std::fs::create_dir_all(&path).unwrap();
+    Some(path.to_path_buf())
+}
 
-    print_manpages(&path);
+fn clap_man(path: &Path) {
+    println!("cargo:rerun-if-changed=src/cli.rs");
+    println!("cargo:rerun-if-changed=man");
+    print_manpages(path);
+}
+
+fn sphinx_man() -> std::process::Output {
+    for rst in glob("doc/*.rst").expect("Failed to read glob pattern") {
+        println!(
+            "cargo:rerun-if-changed=doc{}",
+            rst.expect("Glob").to_string_lossy()
+        );
+    }
+    std::process::Command::new("make")
+        .args(["-C", "doc", "man"])
+        .output()
+        .expect("failed to execute `make -C doc man`")
+}
+
+fn main() {
+    let assets = target_assets().unwrap();
+    clap_man(&assets);
+    sphinx_man();
 }

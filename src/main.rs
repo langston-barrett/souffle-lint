@@ -15,6 +15,7 @@ mod config;
 mod filter;
 mod interactive;
 mod lint;
+mod man;
 mod parse;
 
 const EXIT_SUCCESS: i32 = 0;
@@ -300,6 +301,13 @@ fn main() -> Result<()> {
             no_fail,
         )?,
         cli::Cmd::Info { config, rule } => info(&config, &rule, &From::from(args.interactive))?,
+        cli::Cmd::Man {} => {
+            if man::man()?.success() {
+                EXIT_SUCCESS
+            } else {
+                EXIT_OTHER
+            }
+        }
         cli::Cmd::Sexp { datalog_files } => sexp(&datalog_files)?,
     })
 }
