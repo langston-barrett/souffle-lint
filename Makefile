@@ -23,8 +23,8 @@ check:
 
 # requires: cargo install cargo-deb
 .PHONY: deb
-deb:
-	$(CARGO) deb  $(CARGO_FLAGS) -- --release --target=x86_64-unknown-linux-musl
+deb: doc
+	$(CARGO) deb $(CARGO_FLAGS) -- --release --target=x86_64-unknown-linux-musl
 
 .PHONY: doc
 doc:
