@@ -33,3 +33,16 @@ tree-sitter = "0.20.9"
 tree-sitter-souffle = "0.3"
 tracing = "0.1"
 tracing-subscriber = "0.3"
+
+# TODO(lb): Enable when this hits stable
+# https://doc.rust-lang.org/cargo/reference/unstable.html#artifact-dependencies
+# [dev-dependencies]
+# cargo-deb = { version = "1", artifact = "bin" }
+
+[package.metadata.deb]
+assets = [
+    ["README.md", "usr/share/doc/souffle-lint/README.md", "644"],
+    ["target/x86_64-unknown-linux-musl/release/souffle-lint", "usr/bin/", "755"],
+    # See build.rs
+    ["target/x86_64-unknown-linux-musl/assets/*.1", "usr/share/man/man1", "644"],
+]
