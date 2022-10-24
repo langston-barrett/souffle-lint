@@ -13,6 +13,7 @@ A linter for [Soufflé Datalog][souffle], based on
     - [Contents](#contents)
     - [Build and Install](#build-and-install)
         - [Install from a Release](#install-from-a-release)
+        - [Install with Cargo](#install-with-cargo)
         - [Build From Source](#build-from-source)
     - [Usage](#usage)
         - [Pre-Processing](#pre-processing)
@@ -29,13 +30,17 @@ A linter for [Soufflé Datalog][souffle], based on
 
 ## Build and Install
 
-<!-- TODO(lb): cargo install -->
-<!-- TODO(lb): nix install -->
-
 ### Install from a Release
 
 Statically-linked binaries and Debian packages are available on the [releases
 page][releases].
+
+### Install with Cargo
+
+You can also install souffle-lint via Cargo and crates.io:
+```
+cargo install souffle-lint
+```
 
 ### Build From Source
 
