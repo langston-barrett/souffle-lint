@@ -10,6 +10,7 @@ Source available `on Github <src>`_.
 .. toctree::
    :hidden:
    :caption: Contents
+
    changelog
 
 ==================
