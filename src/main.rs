@@ -43,6 +43,7 @@ fn read_config(path: &str) -> Result<config::Config> {
 }
 
 fn merge_configs(configs: &Vec<String>, no_default_rules: bool) -> Result<config::Config> {
+    // TODO(lb): Merge ignores
     let mut all_configs = if no_default_rules {
         Vec::new()
     } else {
