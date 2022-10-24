@@ -4,11 +4,8 @@ souffle-lint
 
 .. toctree::
    :hidden:
-   :caption: Start Here
-
-.. toctree::
-   :hidden:
-   :caption: Reference
+   :caption: Contents
+   changelog
 
 ==================
 Indices and tables

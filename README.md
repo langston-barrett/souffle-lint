@@ -4,6 +4,8 @@ A linter for [Soufflé Datalog][souffle], based on
 [tree-sitter-souffle][tree-sitter-souffle], configured with
 [tree-sitter queries][tree-sitter-query].
 
+See [the documentation][doc] for more information.
+
 ## Contents
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
@@ -209,6 +211,7 @@ Large Soufflé files are available in `bench/`. Try passing `--trace` to
 5. Release the pre-release created by CI
 
 [#5]: https://github.com/langston-barrett/souffle-lint/issues/5
+[doc]: https://langston-barrett.github.io/souffle-lint/
 [filecheck]: https://www.llvm.org/docs/CommandGuide/FileCheck.html
 [lit]: https://llvm.org/docs/CommandGuide/lit.html
 [releases]: https://github.com/langston-barrett/souffle-lint/releases
