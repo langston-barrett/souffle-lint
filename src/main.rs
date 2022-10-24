@@ -57,6 +57,25 @@ fn merge_configs(configs: &Vec<String>, no_default_rules: bool) -> Result<config
 
 struct DatalogSrc(String);
 
+fn warn_on_parse_errors(node: &tree_sitter::Node) {
+    if node.has_error() {
+        eprintln!("
+[WARN] souffle-lint could not parse part of this file.
+
+You can see which part of the file caused the error with the `sexp` subcommand.
+
+This may be due to a bug in the tree-sitter-souffle parser. You can view the
+known bugs here:
+
+    https://github.com/langston-barrett/tree-sitter-souffle/issues?q=is%3Aissue+is%3Aopen+label%3Abug
+
+If this doesn't look like one of those, please file an issue:
+
+    https://github.com/langston-barrett/tree-sitter-souffle/issues/new
+");
+    }
+}
+
 fn lint_src(
     language: tree_sitter::Language,
     datalog_file: &str,
@@ -68,6 +87,7 @@ fn lint_src(
 ) -> Result<bool> {
     let DatalogSrc(src) = datalog_source;
     let tree = parse_datalog(&src)?;
+    warn_on_parse_errors(&tree.root_node());
 
     let mut fail = false;
     let diagnostics: Vec<Result<Vec<_>>> = rules
