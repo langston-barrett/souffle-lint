@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>souffle-lint &#8212; souffle-lint  documentation</title>
+    <title>Installation &#8212; souffle-lint  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -32,7 +32,8 @@
     <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="next" title="Build" href="build.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -67,7 +68,7 @@
 <div class="bd-sidebar noprint" id="site-navigation">
     <div class="bd-sidebar__content">
         <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="#">
+    <a class="navbar-brand text-wrap" href="index.html">
       
       
       
@@ -84,14 +85,14 @@
   User Guide
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="changelog.html">
    Changelog
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="install.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Installation
   </a>
  </li>
@@ -180,7 +181,7 @@ title="Fullscreen mode"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/index.rst.txt"
+        <a href="_sources/install.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -239,16 +240,14 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   souffle-lint
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-from-a-release">
+   Install from a Release
   </a>
-  <ul class="visible nav section-nav flex-column">
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#indices-and-tables">
-   Indices and tables
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-with-cargo">
+   Install with Cargo
   </a>
  </li>
 </ul>
@@ -260,7 +259,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>souffle-lint</h1>
+                <h1>Installation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -270,16 +269,14 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   souffle-lint
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-from-a-release">
+   Install from a Release
   </a>
-  <ul class="visible nav section-nav flex-column">
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#indices-and-tables">
-   Indices and tables
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-with-cargo">
+   Install with Cargo
   </a>
  </li>
 </ul>
@@ -292,22 +289,20 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="souffle-lint">
-<h1>souffle-lint<a class="headerlink" href="#souffle-lint" title="Permalink to this headline">#</a></h1>
-<p>A linter for <a class="reference external" href="souffle">Soufflé Datalog</a>, based on <a class="reference external" href="tree-sitter-souffle">tree-sitter-souffle</a>, configured with <a class="reference external" href="tree-sitter-queries">tree-sitter queries</a>.</p>
-<p>Source available <a class="reference external" href="src">on Github</a>.</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h1>
+<div class="section" id="install-from-a-release">
+<h2>Install from a Release<a class="headerlink" href="#install-from-a-release" title="Permalink to this headline">#</a></h2>
+<p>Statically-linked binaries and Debian packages are available on the
+<a class="reference external" href="releases">releases page</a>.</p>
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="install-with-cargo">
+<h2>Install with Cargo<a class="headerlink" href="#install-with-cargo" title="Permalink to this headline">#</a></h2>
+<p>You can also install souffle-lint via Cargo and crates.io:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cargo install souffle-lint
+</pre></div>
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </div>
 
 
@@ -318,10 +313,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="changelog.html" title="next page">
+    <a class='left-prev' id="prev-link" href="changelog.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Changelog</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="build.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Changelog</p>
+        <p class="prev-next-title">Build</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
