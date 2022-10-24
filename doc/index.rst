@@ -2,8 +2,9 @@
 souffle-lint
 ============
 
-A linter for `Soufflé Datalog <souffle>`_, based on `tree-sitter-souffle`_,
-configured with `tree-sitter queries <tree-sitter-queries>`_.
+A linter for `Soufflé Datalog <souffle>`_, based on `tree-sitter-souffle
+<tree-sitter-souffle>`_, configured with `tree-sitter queries
+<tree-sitter-queries>`_.
 
 Source available `on Github <src>`_.
 
