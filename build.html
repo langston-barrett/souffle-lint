@@ -264,14 +264,30 @@ title="Print to PDF"
                 
   <div class="section" id="build">
 <h1>Build<a class="headerlink" href="#build" title="Permalink to this headline">#</a></h1>
-<p>To build souffle-lint from source:</p>
+<p>To build souffle-lint from source, get the source:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/langston-barrett/souffle-lint
 <span class="nb">cd</span> souffle-lint
-cargo build --release
+</pre></div>
+</div>
+<p>Then install build-time dependencies:</p>
+<ul class="simple">
+<li><p>Sphinx: Build manual (embedded into binary)</p>
+<ul>
+<li><p>Make: Needed for Sphinx build</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>virtualenv venv
+<span class="nb">source</span> venv/bin/active
+pip install -r doc/requirements.txt
+</pre></div>
+</div>
+<p>Finally, build the code:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cargo build --release
 </pre></div>
 </div>
 <p>To install, just copy the binary somewhere:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="n">target</span><span class="o">/</span><span class="n">release</span><span class="o">/</span><span class="n">souffle</span><span class="o">-</span><span class="n">lint</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp target/release/souffle-lint /usr/bin
 </pre></div>
 </div>
 </div>
