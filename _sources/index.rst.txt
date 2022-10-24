@@ -15,6 +15,7 @@ Source available `on Github <src>`_.
    changelog
    install
    usage
+   writing
 
 .. toctree::
    :hidden:
