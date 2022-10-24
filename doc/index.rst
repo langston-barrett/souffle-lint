@@ -2,9 +2,15 @@
 souffle-lint
 ============
 
+A linter for `Soufflé Datalog <souffle>`_, based on `tree-sitter-souffle`_,
+configured with `tree-sitter queries <tree-sitter-queries>`_.
+
+Source available `on Github <src>`_.
+
 .. toctree::
    :hidden:
    :caption: Contents
+
    changelog
 
 ==================
@@ -14,3 +20,8 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. souffle: https://souffle-lang.github.io/index.html
+.. tree-sitter-queries: https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax
+.. tree-sitter-souffle: https://github.com/langston-barrett/tree-sitter-souffle/
+.. src: https://github.com/langston-barrett/souffle-lint
