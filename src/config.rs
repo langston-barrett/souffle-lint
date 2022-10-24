@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Debug)]
 pub struct Config {
+    #[serde(default)] // Empty
+    pub ignore: Vec<String>,
     pub rules: Vec<Rule>,
 }
 
@@ -28,9 +30,13 @@ pub struct Example {
 
 impl Config {
     pub fn new() -> Config {
-        Config { rules: Vec::new() }
+        Config {
+            ignore: Vec::new(),
+            rules: Vec::new(),
+        }
     }
 
+    // TODO(lb): Merge ignores
     pub fn merge(configs: Vec<Config>) -> Config {
         let mut c = Config::new();
         for config in configs {
