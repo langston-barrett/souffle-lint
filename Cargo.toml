@@ -30,7 +30,7 @@ rayon = "1.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
 tree-sitter = "0.20.9"
-tree-sitter-souffle = "0.3"
+tree-sitter-souffle = "0.4"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 

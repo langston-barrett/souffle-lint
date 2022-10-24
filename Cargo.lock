@@ -548,9 +548,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-souffle"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b593fc9027eb2bf279ea5b3e488033d90d1cbeca8ae1c1a93f8e439c6882d9e2"
+checksum = "10f4f25aa2790a524866eac9f872de86b8bbc01412f39402c2cef3b9fe1dff8b"
 dependencies = [
  "cc",
  "tree-sitter",
