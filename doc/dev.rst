@@ -31,7 +31,7 @@ Releasing
 =========
 
 1. Update ```CHANGELOG.md``
-2. Update the version number in ```Cargo.toml``
+2. Update the version number in ```Cargo.toml``, then ``cargo build --release``
 3. ``git checkout main && git pull origin && git tag -a vX.Y.Z -m vX.Y.Z && git push --tags``
 4. ``cargo publish``
 5. Release the pre-release created by CI
