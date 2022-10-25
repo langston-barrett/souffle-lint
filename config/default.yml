@@ -156,6 +156,24 @@ rules:
        (#match? @const "1")
     )
 
+- name: simpl-con-const
+  short: Simplify constant constraint
+  examples:
+  - before: |
+      even(0) :- true.
+    after: |
+      even(0).
+  - before: |
+      valid(x) :- ok(x), false.
+    after: ""
+  - before: |
+      maybe(x) :- no(x), (yes(x); true).
+    after: |
+      maybe(x) :- no(x), yes(x).
+  queries:
+  - |
+    (conjunction (bool))
+
 - name: simpl-neg-double
   short: Remove double negation of atom.
   captures: true

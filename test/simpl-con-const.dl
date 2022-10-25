@@ -1,0 +1,22 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-con-const --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-con-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+even(0) :- true.
+
+// CHECK-NEXT: warn[simpl-con-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+valid(x) :- ok(x), false.
+
+// CHECK-NEXT: warn[simpl-con-const] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+maybe(x) :- no(x), (yes(x); true).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+even(0).
+
+// CHECK-NOT: {{.+}}
+maybe(x) :- no(x), yes(x).
