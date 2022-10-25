@@ -348,7 +348,7 @@ lit --path<span class="o">=</span><span class="nv">$PWD</span>/target/debug test
 <h2>Releasing<a class="headerlink" href="#releasing" title="Permalink to this headline">#</a></h2>
 <ol class="arabic simple">
 <li><p>Update <code class="docutils literal notranslate"><span class="pre">`CHANGELOG.md</span></code></p></li>
-<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">`Cargo.toml</span></code></p></li>
+<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">`Cargo.toml</span></code>, then <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">--release</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">main</span> <span class="pre">&amp;&amp;</span> <span class="pre">git</span> <span class="pre">pull</span> <span class="pre">origin</span> <span class="pre">&amp;&amp;</span> <span class="pre">git</span> <span class="pre">tag</span> <span class="pre">-a</span> <span class="pre">vX.Y.Z</span> <span class="pre">-m</span> <span class="pre">vX.Y.Z</span> <span class="pre">&amp;&amp;</span> <span class="pre">git</span> <span class="pre">push</span> <span class="pre">--tags</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">publish</span></code></p></li>
 <li><p>Release the pre-release created by CI</p></li>
