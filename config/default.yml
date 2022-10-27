@@ -171,6 +171,53 @@ rules:
        (#match? @const "1")
     )
 
+- name: simpl-call-intrin
+  short: Simplify call to intrinsic functor
+  examples:
+  - before: |
+      rel(x) :- x = cat("foo", "bar").
+    after: |
+      rel(cat("foobar")).
+  queries:
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          .
+          argument: (constant)
+          .
+          argument: (constant))
+        (#eq? @func "cat")
+      )
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          argument: (constant))
+        (#eq? @func "to_float")
+      )
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          argument: (constant))
+        (#eq? @func "to_number")
+      )
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          argument: (constant))
+        (#eq? @func "to_string")
+      )
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          argument: (constant))
+        (#eq? @func "to_unsigned")
+      )
+
 - name: simpl-call-range
   short: Simplify range expression
   long: >
