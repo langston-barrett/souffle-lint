@@ -1,0 +1,22 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-union-prim --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-union-prim] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.type Q = X | symbol
+
+// CHECK: warn[simpl-union-prim] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.type R = T | number | S
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.type T = symbol
+
+// CHECK-NOT: {{.+}}
+.type U = symbol
+
+// CHECK-NOT: {{.+}}
+.type V = T
