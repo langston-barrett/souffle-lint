@@ -315,3 +315,38 @@ rules:
   queries:
   - |
     (type_union (primitive_type))
+
+- name: style-symb-op
+  short: Prefer symbolic operators
+  examples:
+  - before: |
+      rule(x band y) :- rule(x), rule(y).
+    after: |
+      rule(x & y) :- rule(x), rule(y).
+  - before: |
+      rule(lnot y) :- rule(y).
+    after: |
+      rule(!y) :- rule(y).
+  queries:
+  - |
+    (unary_op operator: "bnot")
+  - |
+    (binary_op operator: "band")
+  - |
+    (binary_op operator: "bor")
+  - |
+    (binary_op operator: "bxor")
+  - |
+    (binary_op operator: "bshl")
+  - |
+    (binary_op operator: "bshr")
+  - |
+    (binary_op operator: "bshru")
+  - |
+    (unary_op operator: "lnot")
+  - |
+    (binary_op operator: "land")
+  - |
+    (binary_op operator: "lor")
+  - |
+    (binary_op operator: "lxor")

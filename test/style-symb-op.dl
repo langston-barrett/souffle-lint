@@ -1,0 +1,21 @@
+// RUN: souffle-lint lint --no-fail --only=style-symb-op --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+.decl rule(x: number)
+
+// CHECK: warn[style-symb-op] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rule(x band y) :- rule(x), rule(y).
+
+// CHECK-NEXT: warn[style-symb-op] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rule(lnot y) :- rule(y).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+rule(x && y) :- rule(x), rule(y).
+
+// CHECK-NOT: {{.+}}
+rule(!y) :- rule(y).
