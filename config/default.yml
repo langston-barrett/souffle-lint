@@ -1,6 +1,7 @@
 rules:
 
 # TODO(lb): Bitwise identities
+# TODO(lb): to_number(to_string(x)), etc.
 
 - name: depr-prag-legacy
   short: Remove legacy pragma
@@ -170,6 +171,23 @@ rules:
          (constant (number (integer (decimal) @const))))
        (#match? @const "1")
     )
+
+- name: simpl-call-cat
+  short: Simplify call to cat
+  examples:
+  - before: |
+      rel(cat("", x)) :- g(x).
+    after: |
+      rel(x).
+  queries:
+    - |
+      (
+        (functor_call
+          functor: (intrinsic_functor) @func
+          argument: (constant) @con)
+        (#eq? @func "cat")
+        (#eq? @con "\"\"")
+      )
 
 - name: simpl-call-intrin
   short: Simplify call to intrinsic functor
