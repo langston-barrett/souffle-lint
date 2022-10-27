@@ -1,0 +1,26 @@
+// RUN: souffle-lint lint --no-fail --only=depr-prag-legacy --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[depr-prag-legacy] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.pragma "legacy"
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.decl g()
+
+// CHECK-NOT: {{.+}}
+.printsize g
+
+// CHECK-NOT: {{.+}}
+.pragma "fact-dir" "//never//gonna//give//you//up//"
+
+// CHECK-NOT: {{.+}}
+.pragma "magic-transform" "*"
+
+// CHECK-NOT: {{.+}}
+.pragma "profile" "profile_json.json"
+

@@ -2,6 +2,19 @@ rules:
 
 # TODO(lb): Bitwise identities
 
+- name: depr-prag-legacy
+  short: Remove legacy pragma
+  examples:
+  - before: |
+      .pragma "legacy"
+    after: ""
+  queries:
+  - |
+    (
+      (pragma key: (string) @s)
+      (#eq? @s "\"legacy\"")
+    )
+
 - name: depr-rel-qual
   short: Deprecated relation qualifier
   examples:
