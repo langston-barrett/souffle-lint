@@ -60,25 +60,55 @@ fn merge_configs(configs: &Vec<String>, no_default_rules: bool) -> Result<config
 
 struct DatalogSrc(String);
 
-fn warn_on_parse_errors(node: &tree_sitter::Node) {
-    if node.has_error() {
-        eprintln!("
-[WARN] souffle-lint could not parse part of this file.
+const PARSE_ERROR_MESSAGE: &str = "
+souffle-lint could not parse part of this file.
 
-You can see which part of the file caused the error with the `sexp` subcommand.
+This may be due to one of three reasons:
 
-This may be due to a bug in the tree-sitter-souffle parser. You can view the
-known bugs here:
+1. The file has a syntax error. Try running `souffle --show=parse-errors
+   file.dl` to check if this is the case.
+2. The file contains C pre-processor directives. In this case, you can safely
+   ignore this warning, see the documentation for details.
+3. This may be due to a bug in the tree-sitter-souffle parser. You can view the
+   known bugs here:
 
-    https://github.com/langston-barrett/tree-sitter-souffle/issues?q=is%3Aissue+is%3Aopen+label%3Abug
+      https://github.com/langston-barrett/tree-sitter-souffle/issues?q=is%3Aissue+is%3Aopen+label%3Abug
 
-If this doesn't look like one of those, please file an issue:
+   If this doesn't look like one of those, please file an issue:
 
-    https://github.com/langston-barrett/tree-sitter-souffle/issues/new
-");
+      https://github.com/langston-barrett/tree-sitter-souffle/issues/new
+
+For small files, you can see which part of the file caused the error with the
+`sexp` subcommand.
+";
+
+fn handle_parse_errors(
+    datalog_file_path: &str,
+    node: &tree_sitter::Node,
+    on_parse_error: &cli::OnParseError,
+) {
+    // TODO(lb): colorize!
+    match on_parse_error {
+        cli::OnParseError::Ignore => (),
+        cli::OnParseError::Warn if !node.has_error() => (),
+        cli::OnParseError::Error if !node.has_error() => (),
+        cli::OnParseError::Warn => {
+            eprintln!(
+                "[warn] {}{}\n\nhint: try --on-parse-error=ignore",
+                datalog_file_path, PARSE_ERROR_MESSAGE
+            );
+        }
+        cli::OnParseError::Error => {
+            eprintln!(
+                "[error] {}{}\n\nhint: try --on-parse-error=ignore",
+                datalog_file_path, PARSE_ERROR_MESSAGE
+            );
+            process::exit(EXIT_OTHER);
+        }
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn lint_src(
     language: tree_sitter::Language,
     datalog_file: &str,
@@ -87,10 +117,11 @@ fn lint_src(
     format: &cli::Format,
     interactive: &interactive::Interactive,
     no_fail: bool,
+    on_parse_error: &cli::OnParseError,
 ) -> Result<bool> {
     let DatalogSrc(src) = datalog_source;
     let tree = parse_datalog(&src)?;
-    warn_on_parse_errors(&tree.root_node());
+    handle_parse_errors(datalog_file, &tree.root_node(), on_parse_error);
 
     let mut fail = false;
     let diagnostics: Vec<Result<Vec<_>>> = rules
@@ -132,6 +163,7 @@ fn check_config(config: &config::Config) {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn lint(
     configs: &Vec<String>,
     no_default_rules: bool,
@@ -140,6 +172,7 @@ fn lint(
     mut filt: filter::RuleFilter,
     interactive: &interactive::Interactive,
     no_fail: bool,
+    on_parse_error: &cli::OnParseError,
 ) -> Result<i32> {
     let config = merge_configs(configs, no_default_rules)?;
     check_config(&config);
@@ -163,6 +196,7 @@ fn lint(
             format,
             interactive,
             no_fail,
+            on_parse_error,
         )
         .context("Failed to lint stdin")?
     {
@@ -177,6 +211,7 @@ fn lint(
             format,
             interactive,
             no_fail,
+            on_parse_error,
         )
         .with_context(|| format!("Failed to lint file {}", datalog_file))?
         {
@@ -313,6 +348,7 @@ fn main() -> Result<()> {
             slow,
             no_default_rules,
             no_fail,
+            on_parse_error,
         } => lint(
             &config,
             no_default_rules,
@@ -321,6 +357,7 @@ fn main() -> Result<()> {
             filter::RuleFilter { only, ignore, slow },
             &From::from(args.interactive),
             no_fail,
+            &on_parse_error,
         )?,
         cli::Cmd::Info {
             config,
