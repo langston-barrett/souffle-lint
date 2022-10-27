@@ -1,0 +1,28 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-con-comp --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-con-comp] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f(x) :- g(x), x = x.
+
+// CHECK-NEXT: warn[simpl-con-comp] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f() :- 1 != 1.
+
+// CHECK-NEXT: warn[simpl-con-comp] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+f() :- 1 < 1.
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+f(x) :- g(x).
+
+// CHECK-NOT: {{.+}}
+maybe(x) :- no(x), yes(x).
+
+// CHECK-NOT: {{.+}}
+f() :- g(x), h(y), x = y.
+
+// CHECK-NOT: {{.+}}
+f() :- g(x), x > 5.
