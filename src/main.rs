@@ -115,6 +115,7 @@ fn lint_src(
 }
 
 // TODO(lb): Check for duplicated rule IDs
+// TODO(lb): Warn on punctuation in short
 // TODO(lb): Warn on lack of examples
 // TODO(lb): Warn on empty short description
 // TODO(lb): Warn on empty long description

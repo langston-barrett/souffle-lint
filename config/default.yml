@@ -260,7 +260,7 @@ rules:
     )
 
 - name: simpl-rule-fact
-  short: Remove rule with fact for a body.
+  short: Remove rule with fact for a body
   captures: true
   slow: true
   examples:
@@ -280,3 +280,18 @@ rules:
         (monotonic_rule body: (disjunction . (conjunction . (atom) @rule .) .)))
       (#eq? @fact @rule)
     )
+
+- name: simpl-union-prim
+  short: Simplify union with primitive type
+  examples:
+  - before: |
+      .type U = X | symbol
+    after: |
+      .type U = symbol
+  - before: |
+      .type U = T | number | S
+    after: |
+      .type U = number
+  queries:
+  - |
+    (type_union (primitive_type))
