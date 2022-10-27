@@ -266,8 +266,8 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pre-processing">
-   Pre-Processing
+  <a class="reference internal nav-link" href="#on-the-c-pre-processor">
+   On the C Pre-Processor
   </a>
  </li>
 </ul>
@@ -290,8 +290,8 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pre-processing">
-   Pre-Processing
+  <a class="reference internal nav-link" href="#on-the-c-pre-processor">
+   On the C Pre-Processor
   </a>
  </li>
 </ul>
@@ -322,19 +322,25 @@ souffle-lint lint ./**/*.dl
 <code class="docutils literal notranslate"><span class="pre">1</span></code> if there were any warnings, or <code class="docutils literal notranslate"><span class="pre">2</span></code> if there was a problem (e.g., a parse
 error or bad configuration).</p>
 <p>See <code class="docutils literal notranslate"><span class="pre">--help</span></code> for more options and <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> for configuration.</p>
-<div class="section" id="pre-processing">
-<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">#</a></h2>
+<div class="section" id="on-the-c-pre-processor">
+<h2>On the C Pre-Processor<a class="headerlink" href="#on-the-c-pre-processor" title="Permalink to this headline">#</a></h2>
 <p>Soufflé runs the C pre-processor (CPP) on Datalog files by default, and it is
 customary for developers to use its functionality. The <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> parser
-does not handle CPP directives; if you use them you must run the pre-processor
-manually and then run <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> on the result. For instance,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mcpp -W <span class="m">0</span> -P your/datalog/file.dl -o out.dl
-souffle-lint lint out.dl
+does not handle CPP directives, but it’s still recommended to run
+<code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> <em>before</em> you run the pre-processor, for the following reasons.</p>
+<p>The parser is highly robust to syntax errors and <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> will ignore
+them by default.</p>
+<p>Running the C pre-processor before <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> can result in false
+positives, e.g. you might have</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fact</span><span class="p">(</span><span class="n">MACRO_VAR</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> doesn’t (<a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/17">yet</a>) take advantage of the <code class="docutils literal notranslate"><span class="pre">#line</span></code>
-directives in the CPP output, so the line numbers in its output won’t correspond
-to your source file.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">MACRO_VAR</span></code> is a definition given to the pre-processor. If you run the
+pre-processor before <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> and define <code class="docutils literal notranslate"><span class="pre">MACRO_VAR</span></code> to be an integer
+like <code class="docutils literal notranslate"><span class="pre">5</span></code>, this fact would run afowl of the <code class="docutils literal notranslate"><span class="pre">simpl-binop-const</span></code> rule.</p>
+<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">souffle-lint</span></code> doesn’t (<a class="reference external" href="https://github.com/langston-barrett/souffle-lint/issues/17">yet</a>) take advantage of the
+<code class="docutils literal notranslate"><span class="pre">#line</span></code> directives in the CPP output, so the line numbers in its output won’t
+correspond to your source file if you run the pre-processor first.</p>
 </div>
 </div>
 
