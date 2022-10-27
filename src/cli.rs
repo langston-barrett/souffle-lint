@@ -62,6 +62,29 @@ impl Default for InfoFormat {
     }
 }
 
+#[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
+pub enum OnParseError {
+    Ignore,
+    Warn,
+    Error,
+}
+
+impl std::fmt::Display for OnParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            OnParseError::Ignore => write!(f, "ignore"),
+            OnParseError::Warn => write!(f, "warn"),
+            OnParseError::Error => write!(f, "error"),
+        }
+    }
+}
+
+impl Default for OnParseError {
+    fn default() -> Self {
+        OnParseError::Ignore
+    }
+}
+
 #[derive(Subcommand, Debug)]
 pub enum Cmd {
     /// Lint files
@@ -81,6 +104,10 @@ pub enum Cmd {
         /// Only use this rule
         #[arg(long, default_value = None, value_name = "RULE")]
         only: Option<String>,
+
+        /// Behavior on parse errors
+        #[arg(long, default_value_t = OnParseError::Ignore, value_name = "CHOICE")]
+        on_parse_error: OnParseError,
 
         /// Ignore this rule
         #[arg(long, value_name = "RULE")]

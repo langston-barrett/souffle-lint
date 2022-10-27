@@ -22,21 +22,30 @@ error or bad configuration).
 
 See ``--help`` for more options and :doc:`config` for configuration.
 
-Pre-Processing
-==============
+On the C Pre-Processor
+======================
 
 Soufflé runs the C pre-processor (CPP) on Datalog files by default, and it is
 customary for developers to use its functionality. The ``souffle-lint`` parser
-does not handle CPP directives; if you use them you must run the pre-processor
-manually and then run ``souffle-lint`` on the result. For instance,
+does not handle CPP directives, but it's still recommended to run
+``souffle-lint`` *before* you run the pre-processor, for the following reasons.
 
-.. code-block:: bash
+The parser is highly robust to syntax errors and ``souffle-lint`` will ignore
+them by default.
 
-   mcpp -W 0 -P your/datalog/file.dl -o out.dl
-   souffle-lint lint out.dl
+Running the C pre-processor before ``souffle-lint`` can result in false
+positives, e.g. you might have
 
-``souffle-lint`` doesn’t (`yet <17_>`_) take advantage of the ``#line``
-directives in the CPP output, so the line numbers in its output won’t correspond
-to your source file.
+.. code-block::
+
+   fact(MACRO_VAR + 1).
+
+where ``MACRO_VAR`` is a definition given to the pre-processor. If you run the
+pre-processor before ``souffle-lint`` and define ``MACRO_VAR`` to be an integer
+like ``5``, this fact would run afowl of the ``simpl-binop-const`` rule.
+
+Furthermore, ``souffle-lint`` doesn’t (`yet <17_>`_) take advantage of the
+``#line`` directives in the CPP output, so the line numbers in its output won’t
+correspond to your source file if you run the pre-processor first.
 
 .. _17: https://github.com/langston-barrett/souffle-lint/issues/17
