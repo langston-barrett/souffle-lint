@@ -281,6 +281,26 @@ rules:
       (#eq? @fact @rule)
     )
 
+- name: simpl-union-dup
+  short: Simplify union with duplicated type
+  examples:
+  - before: |
+      .type U = X | X
+    after: |
+      .type U = X
+  - before: |
+      .type U = T | S | T
+    after: |
+      .type U = T | S
+  queries:
+  - |
+    (
+      (type_union
+        (qualified_name) @first
+        (qualified_name) @second)
+      (#eq? @first @second)
+    )
+
 - name: simpl-union-prim
   short: Simplify union with primitive type
   examples:

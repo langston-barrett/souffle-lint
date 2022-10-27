@@ -1,0 +1,22 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-union-dup --format=oneline %s 2>&1 | FileCheck %s
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-union-dup] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.type Q = X | X
+
+// CHECK: warn[simpl-union-dup] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+.type R = S | T | S
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+.type T = number
+
+// CHECK-NOT: {{.+}}
+.type S <: number
+
+// CHECK-NOT: {{.+}}
+.type X = T | S
