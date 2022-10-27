@@ -1,0 +1,22 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-call-cat --format=oneline %s 2>&1 | FileCheck %s
+
+.decl rel(x: symbol)
+.output rel(IO=stdout)
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-call-cat] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rel(cat("", x)) :- rel(x).
+
+// CHECK: warn[simpl-call-cat] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rel(cat(x, "", x)) :- rel(x).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+rel(cat(x, x)) :- rel(x).
+
+// CHECK-NOT: {{.+}}
+rel("").
