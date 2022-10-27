@@ -171,6 +171,22 @@ rules:
        (#match? @const "1")
     )
 
+- name: simpl-call-range
+  short: Simplify range expression
+  long: >
+    The default step is 1.
+  examples:
+  - before: |
+      num(x) :- x = range(0, 10, 1).
+    after: |
+      num(x) :- x = range(0, 10).
+  queries:
+  - |
+    (
+      (range step: (constant) @const)
+      (#eq? @const "1")
+    )
+
 - name: simpl-con-const
   short: Simplify constant constraint
   examples:
@@ -209,7 +225,7 @@ rules:
     )
 
 - name: simpl-neg-double
-  short: Remove double negation of atom.
+  short: Remove double negation of atom
   captures: true
   examples:
   - before: |

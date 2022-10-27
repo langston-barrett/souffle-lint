@@ -1,0 +1,19 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-call-range --format=oneline %s 2>&1 | FileCheck %s
+
+.decl num(x: number)
+.output num(IO=stdout)
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-call-range] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+num(x) :- x = range(0, 10, 1).
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+num(x) :- x = range(0, 10).
+
+// CHECK-NOT: {{.+}}
+num(0).
