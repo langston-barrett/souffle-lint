@@ -41,6 +41,27 @@ impl Default for Format {
     }
 }
 
+#[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
+pub enum InfoFormat {
+    Oneline,
+    Verbose,
+}
+
+impl std::fmt::Display for InfoFormat {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            InfoFormat::Oneline => write!(f, "oneline"),
+            InfoFormat::Verbose => write!(f, "verbose"),
+        }
+    }
+}
+
+impl Default for InfoFormat {
+    fn default() -> Self {
+        InfoFormat::Oneline
+    }
+}
+
 #[derive(Subcommand, Debug)]
 pub enum Cmd {
     /// Lint files
@@ -82,6 +103,10 @@ pub enum Cmd {
         /// Additional configuration file(s)
         #[arg(long, value_name = "CONFIG")]
         config: Vec<String>,
+
+        /// Format
+        #[arg(long, value_enum, default_value_t = InfoFormat::Oneline, value_name = "FORMAT")]
+        format: InfoFormat,
 
         /// Show help for a specific rule
         #[arg(default_value = None, value_name = "RULE")]

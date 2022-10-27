@@ -189,9 +189,13 @@ fn lint(
 fn info_rule(
     rule: &config::Rule,
     w: &mut impl Write,
+    format: &cli::InfoFormat,
     interactive: &interactive::Interactive,
 ) -> Result<()> {
-    writeln!(w)?;
+    let verbose = format == &cli::InfoFormat::Verbose;
+    if verbose {
+        writeln!(w)?;
+    }
     writeln!(
         w,
         "{}: {}",
@@ -202,6 +206,9 @@ fn info_rule(
         },
         rule.short
     )?;
+    if !verbose {
+        return Ok(());
+    }
     if let Some(l) = &rule.long {
         writeln!(w, "\n{}", l)?;
     }
@@ -228,6 +235,7 @@ fn info_rule(
 
 fn info(
     configs: &Vec<String>,
+    format: &cli::InfoFormat,
     rule_name: &Option<String>,
     interactive: &interactive::Interactive,
 ) -> Result<i32> {
@@ -239,11 +247,21 @@ fn info(
         match rule_name {
             Some(name) => {
                 if &rule.name == name {
-                    info_rule(&rule, &mut lock, interactive)?;
+                    info_rule(&rule, &mut lock, format, interactive)?;
                 }
             }
-            None => info_rule(&rule, &mut lock, interactive)?,
+            None => info_rule(&rule, &mut lock, format, interactive)?,
         }
+    }
+    if format == &cli::InfoFormat::Oneline {
+        println!(
+            "{}: Run with --format verbose to see more information.",
+            if From::from(interactive) {
+                "hint".italic()
+            } else {
+                "hint".into()
+            }
+        );
     }
     Ok(EXIT_SUCCESS)
 }
@@ -304,7 +322,11 @@ fn main() -> Result<()> {
             &From::from(args.interactive),
             no_fail,
         )?,
-        cli::Cmd::Info { config, rule } => info(&config, &rule, &From::from(args.interactive))?,
+        cli::Cmd::Info {
+            config,
+            format,
+            rule,
+        } => info(&config, &format, &rule, &From::from(args.interactive))?,
         #[cfg(feature = "man")]
         cli::Cmd::Man {} => {
             if man::man()?.success() {
