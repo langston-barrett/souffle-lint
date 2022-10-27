@@ -58,6 +58,7 @@ rules:
     Try deleting one.
     Soufflé would treat this as an error.
   captures: true
+  slow: true
   examples:
   - before: |
       .decl f()
@@ -80,6 +81,7 @@ rules:
     Try deleting one.
     Soufflé would treat this as an error.
   captures: true
+  slow: true
   examples:
   - before: |
       .type Foo <: symbol
