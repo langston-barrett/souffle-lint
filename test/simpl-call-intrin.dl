@@ -1,0 +1,25 @@
+// RUN: souffle-lint lint --no-fail --only=simpl-call-intrin --format=oneline %s 2>&1 | FileCheck %s
+
+.decl rel(s: symbol)
+.output rel(IO=stdout)
+
+// ---------------------------------------------------------
+
+// CHECK: warn[simpl-call-intrin] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rel(x) :- x = cat("foo", "bar").
+
+// CHECK: warn[simpl-call-intrin] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rel(x) :- x = to_string(15).
+
+// CHECK: warn[simpl-call-intrin] {{.+}}.dl:[[# @LINE]]:{{[0-9]+}}-[[# @LINE]]:{{[0-9]+}}
+rel(x) :- x = to_unsigned("5").
+
+// CHECK-EMPTY:
+
+// ---------------------------------------------------------
+
+// CHECK-NOT: {{.+}}
+rel(x) :- rel(x), x = cat(x, "baz").
+
+// CHECK-NOT: {{.+}}
+rel("foo").
