@@ -13,6 +13,7 @@ Source available `on Github <src_>`_.
 
    categories
    config
+   contributing
    changelog
    install
    usage
