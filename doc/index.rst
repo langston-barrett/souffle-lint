@@ -5,7 +5,7 @@ souffle-lint
 A linter for `Soufflé Datalog <souffle_>`_, based on `tree-sitter-souffle`_,
 configured with `tree-sitter queries`_.
 
-Source available `on Github <src>`_.
+Source available `on Github <src_>`_.
 
 .. toctree::
    :hidden:
