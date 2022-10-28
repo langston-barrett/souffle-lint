@@ -2,6 +2,8 @@
 Installation
 ============
 
+Once you've installed ``souffle-lint``, head to :doc:`usage`.
+
 Install from a Release
 ======================
 
