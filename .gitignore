@@ -1,3 +1,7 @@
 /*.dl
 /target
 /venv
+
+# Produced by CI during release builds, need to be ignored so Cargo will publish.
+souffle-lint
+souffle-lint_0.3.0~rc.1_amd64.deb

@@ -433,7 +433,7 @@ checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
 
 [[package]]
 name = "souffle-lint"
-version = "0.2.1"
+version = "0.3.0-rc.1"
 dependencies = [
  "anyhow",
  "atty",

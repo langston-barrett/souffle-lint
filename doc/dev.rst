@@ -31,7 +31,7 @@ Releasing
 =========
 
 - Create branch with a name starting with ``release``
-- Update ``CHANGELOG.md``
+- Update ``doc/changelog.rst``
 - Update the version number in ``Cargo.toml``, then ``cargo build --release``
 - Check that CI was successful on the release branch
 - Merge the release branch to ``main``
