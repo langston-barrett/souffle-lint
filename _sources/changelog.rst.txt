@@ -6,6 +6,46 @@ Changelog
 
 .. TODO(lb): How to put the hyperlink targets at the end?
 
+`0.3.0 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.3.0>`_ - 2022-10-28
+============================================================================================
+
+`Compare to v0.2.1 <https://github.com/langston-barrett/souffle-lint/compare/v0.2.1...v0.3.0>`_
+
+Added
+-----
+
+- Added rules:
+
+  * ``simpl-call-cat``: Simplify call to cat
+
+  * ``simpl-call-intrin``: Simplify call to intrinsic functor
+
+  * ``simpl-call-range``: Simplify range expression
+
+  * ``depr-prag-legacy``: Remove legacy pragma
+
+  * ``simpl-con-comp``: Simplify trivial comparison constraint
+
+  * ``style-symb-op``: Prefer symbolic operators
+
+  * ``simpl-union-dup``: Simplify union with duplicated type
+
+  * ``simpl-union-prim``: Simplify union with primitive type
+
+  * ``simpl-con-const``: Simplify constant constraint
+
+- Added ``--format`` flag to ``info``
+
+- Added :doc:`contributing`
+
+Changed
+-------
+
+- No longer recommend running the C pre-processor before linting
+
+- The CI system now publishes crates to crates.io
+
+
 `0.2.1 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.2.1>`_ - 2022-10-24
 ============================================================================================
 
