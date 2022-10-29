@@ -15,7 +15,7 @@ jobs:
     # This job currently takes longer than the `test` job. To keep CI times low
     # for pull requests while maintaining our ability to catch problems before
     # releases, we only run it on main.
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
