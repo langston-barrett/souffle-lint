@@ -266,7 +266,7 @@ fn context_node(start: Node) -> Option<Node> {
     None
 }
 
-fn context_for_node<'a>(source: &'a str, start: Node<'a>) -> Result<Option<Fragment>> {
+fn context_for_node<'a>(source: &'a str, start: Node<'a>) -> Result<Option<Fragment<'a>>> {
     match context_node(start) {
         None => Ok(None),
         Some(ancestor) => {
