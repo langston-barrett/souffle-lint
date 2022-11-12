@@ -6,6 +6,17 @@ Changelog
 
 .. TODO(lb): How to put the hyperlink targets at the end?
 
+`0.4.0 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.4.0>`_ - 2022-11-12
+============================================================================================
+
+`Compare to v0.3.0 <https://github.com/langston-barrett/souffle-lint/compare/v0.3.0...v0.4.0>`_
+
+Added
+-----
+
+- Added support for JSON output for integration with other tools
+
+
 `0.3.0 <https://github.com/langston-barrett/souffle-lint/releases/tag/v0.3.0>`_ - 2022-10-28
 ============================================================================================
 
