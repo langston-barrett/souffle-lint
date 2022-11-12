@@ -21,7 +21,7 @@ jobs:
 
     - name: Build static executable
       run: |
-        make static
+        make CARGO_FLAGS=--locked static
         cp target/x86_64-unknown-linux-musl/release/souffle-lint .
 
     - name: Build Debian package
@@ -46,7 +46,7 @@ jobs:
       # TODO(#29): Enable features
       run: |
         if [[ ${PUSH} == true ]]; then
-          cargo publish --token ${CRATES_IO_TOKEN} --no-default-features
+          cargo publish --locked --token ${CRATES_IO_TOKEN} --no-default-features
         else
-          cargo publish --dry-run --token ${CRATES_IO_TOKEN} --no-default-features
+          cargo publish --locked --dry-run --token ${CRATES_IO_TOKEN} --no-default-features
         fi

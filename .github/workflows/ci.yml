@@ -83,7 +83,7 @@ jobs:
       run: |
         pip install -r doc/requirements.txt
 
-    - run: make build
+    - run: make CARGO_FLAGS=--locked build
 
     - name: Test deps
       run: |
@@ -91,4 +91,4 @@ jobs:
         sudo apt-get install -y llvm-11-tools
         sudo update-alternatives --install /usr/bin/FileCheck FileCheck /usr/bin/FileCheck-11 60
 
-    - run: make test
+    - run: make CARGO_FLAGS=--locked test
