@@ -2,8 +2,9 @@ use std::io::Write;
 
 use anyhow::{Context, Result};
 use colored::Colorize;
+use serde::Serialize;
 use tracing::info_span;
-use tree_sitter::{Language, Node, Point, Query, QueryCursor, Tree};
+use tree_sitter::{Language, Node, Query, QueryCursor, Tree};
 
 use super::cli::Format;
 use super::config::Rule;
@@ -11,6 +12,22 @@ use super::interactive::Interactive;
 
 // TODO(lb): Maybe use ariadne or miette (internals) for formatting errors?
 
+#[derive(Serialize, Clone, Eq, PartialEq, Debug)]
+pub struct Point {
+    pub row: usize,
+    pub column: usize,
+}
+
+impl From<tree_sitter::Point> for Point {
+    fn from(pt: tree_sitter::Point) -> Self {
+        Point {
+            row: pt.row,
+            column: pt.column,
+        }
+    }
+}
+
+#[derive(Serialize, Clone, Eq, PartialEq, Debug)]
 pub struct Fragment<'a> {
     // NOTE: Can't have a Node<'a> field because Send is not implemented for *Tree
     pub node_text: &'a str,
@@ -19,6 +36,7 @@ pub struct Fragment<'a> {
     pub context: Option<Box<Fragment<'a>>>,
 }
 
+#[derive(Serialize, Clone, Eq, PartialEq, Debug)]
 pub struct Diagnostic<'a> {
     pub fragments: Vec<Fragment<'a>>,
     pub rule: &'a Rule,
@@ -214,6 +232,11 @@ impl<'a> Diagnostic<'a> {
         let _enter = span.enter();
         match format {
             Format::Default => self.display_default(w, From::from(interactive), false),
+            Format::Json => {
+                let mut diag = self.clone();
+                diag.source = ""; // don't output whole source file
+                Ok(writeln!(w, "{}", serde_json::to_string(&diag)?)?)
+            }
             Format::None => Ok(()),
             Format::Oneline => self.display_oneline(w, From::from(interactive)),
             Format::Verbose => self.display_default(w, From::from(interactive), true),
@@ -252,8 +275,8 @@ fn context_for_node<'a>(source: &'a str, start: Node<'a>) -> Result<Option<Fragm
                 .context("Failed to retrieve node text")?;
             Ok(Some(Fragment {
                 node_text: ancestor_text,
-                start: ancestor.start_position(),
-                end: ancestor.end_position(),
+                start: Point::from(ancestor.start_position()),
+                end: Point::from(ancestor.end_position()),
                 context: None,
             }))
         }
@@ -305,8 +328,8 @@ pub fn query<'a>(
 
                 fragments.push(Fragment {
                     node_text,
-                    start: c.node.start_position(),
-                    end: c.node.end_position(),
+                    start: Point::from(c.node.start_position()),
+                    end: Point::from(c.node.end_position()),
                     context: context_for_node(source, c.node)
                         .context("Failed to retrieve context for node")?
                         .map(Box::new),

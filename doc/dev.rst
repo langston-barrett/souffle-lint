@@ -4,6 +4,8 @@ Development
 
 See also :doc:`build`.
 
+.. TODO(lb): Discuss clippy
+
 Tests
 =====
 
