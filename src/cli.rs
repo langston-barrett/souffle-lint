@@ -19,6 +19,7 @@ pub struct Args {
 #[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
 pub enum Format {
     Default,
+    Json,
     None,
     Oneline,
     Verbose,
@@ -28,6 +29,7 @@ impl std::fmt::Display for Format {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Format::Default => write!(f, "default"),
+            Format::Json => write!(f, "json"),
             Format::None => write!(f, "none"),
             Format::Oneline => write!(f, "oneline"),
             Format::Verbose => write!(f, "verbose"),
