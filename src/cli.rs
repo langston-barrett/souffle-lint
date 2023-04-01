@@ -16,8 +16,9 @@ pub struct Args {
     pub trace: bool,
 }
 
-#[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
+#[derive(clap::ValueEnum, Debug, Default, Clone, PartialEq, Eq)]
 pub enum Format {
+    #[default]
     Default,
     Json,
     None,
@@ -37,14 +38,9 @@ impl std::fmt::Display for Format {
     }
 }
 
-impl Default for Format {
-    fn default() -> Self {
-        Format::Default
-    }
-}
-
-#[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
+#[derive(clap::ValueEnum, Debug, Default, Clone, PartialEq, Eq)]
 pub enum InfoFormat {
+    #[default]
     Oneline,
     Verbose,
 }
@@ -58,14 +54,9 @@ impl std::fmt::Display for InfoFormat {
     }
 }
 
-impl Default for InfoFormat {
-    fn default() -> Self {
-        InfoFormat::Oneline
-    }
-}
-
-#[derive(clap::ValueEnum, Debug, Clone, PartialEq, Eq)]
+#[derive(clap::ValueEnum, Debug, Default, Clone, PartialEq, Eq)]
 pub enum OnParseError {
+    #[default]
     Ignore,
     Warn,
     Error,
@@ -78,12 +69,6 @@ impl std::fmt::Display for OnParseError {
             OnParseError::Warn => write!(f, "warn"),
             OnParseError::Error => write!(f, "error"),
         }
-    }
-}
-
-impl Default for OnParseError {
-    fn default() -> Self {
-        OnParseError::Ignore
     }
 }
 

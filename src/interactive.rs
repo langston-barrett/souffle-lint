@@ -1,6 +1,7 @@
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub enum Interactive {
     Yes,
+    #[default]
     No,
 }
 
@@ -20,11 +21,5 @@ impl From<&Interactive> for bool {
             Interactive::Yes => true,
             Interactive::No => false,
         }
-    }
-}
-
-impl Default for Interactive {
-    fn default() -> Self {
-        Interactive::No
     }
 }
