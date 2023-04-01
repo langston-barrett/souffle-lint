@@ -24,6 +24,7 @@ jobs:
         sudo apt-get install -y musl-tools
         rustup target add x86_64-unknown-linux-musl
         cargo install cargo-deb
+    - uses: Swatinem/rust-cache@v2
     - run: make deb
 
   doc:
@@ -71,6 +72,7 @@ jobs:
       run: |
         rustup update
         rustup component add clippy
+    - uses: Swatinem/rust-cache@v2
     - name: Lint
       run: make CARGO_FLAGS=--no-default-features lint
 
@@ -90,5 +92,7 @@ jobs:
         pip install lit==15
         sudo apt-get install -y llvm-11-tools
         sudo update-alternatives --install /usr/bin/FileCheck FileCheck /usr/bin/FileCheck-11 60
+
+    - uses: Swatinem/rust-cache@v2
 
     - run: make CARGO_FLAGS=--locked test
